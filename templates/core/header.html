@@ -1,0 +1,44 @@
+<header class="header">
+    <div class="container">
+        <div class="header-row">
+            <div class="table full-width">
+                <div class="table-cell v-a-middle">
+                    <div class="social-wrap">
+                        <a href="#" class="social-fb"></a>
+                        <a href="#" class="social-instagram"></a>
+                        <a href="#" class="social-tweeter"></a>
+                        <a href="#" class="social-youtube"></a>
+                    </div>
+                </div>
+                <div class="table-cell v-a-middle">
+                    <div class="float-right">
+                        <a href="#" class="link">Ienākt</a>
+                        <b>&nbsp;|&nbsp;</b>
+                        <a href="#" class="link">Reģistrēties</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-row">
+            <div class="table full-width fixed-layout">
+                <div class="table-cell">
+                    <ul class="nav">
+                        <li><a href="{% url 'news' %}">Jaunumi</a></li>
+                        <li><a href="{% url 'tournaments' %}">Turnīri</a></li>
+                        <li><a href="{% url 'events' %}">Notikumi</a></li>
+                    </ul>
+                </div>
+                <div class="table-cell header-brand">
+                    <a href="{% url 'index' %}" class="brand"></a>
+                </div>
+                <div class="table-cell">
+                    <ul class="nav">
+                        <li><a href="{% url 'documents' %}">Dokumenti</a></li>
+                        <li><a href="{% url 'aboutus'%}">Par mums</a></li>
+                        <li><a href="{% url 'eshop' %}">E-veikals</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -7,56 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link rel="stylesheet" type="text/css" href="{% static 'dist/index.css' %}">
-    <title>LTFA</title>
+    <title>{% block title %}LTFA{% endblock %}</title>
 </head>
 <body>
     <div class="table full-height full-width fixed-layout">
         <div class="table-row">
             <div class="table-cell">
-                <header class="header">
-                    <div class="container">
-                        <div class="header-row">
-                            <div class="table full-width">
-                                <div class="table-cell v-a-middle">
-                                    <div class="social-wrap">
-                                        <a href="#" class="social-fb"></a>
-                                        <a href="#" class="social-instagram"></a>
-                                        <a href="#" class="social-tweeter"></a>
-                                        <a href="#" class="social-youtube"></a>
-                                    </div>
-                                </div>
-                                <div class="table-cell v-a-middle">
-                                    <div class="float-right">
-                                        <a href="#" class="link">Ienākt</a>
-                                        <b>&nbsp;|&nbsp;</b>
-                                        <a href="#" class="link">Reģistrēties</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="header-row">
-                            <div class="table full-width fixed-layout">
-                                <div class="table-cell">
-                                    <ul class="nav">
-                                        <li><a href="#">Jaunumi</a></li>
-                                        <li><a href="#">Turnīri</a></li>
-                                        <li><a href="#">Notikumi</a></li>
-                                    </ul>
-                                </div>
-                                <div class="table-cell header-brand">
-                                    <a href="./home.html" class="brand"></a>
-                                </div>
-                                <div class="table-cell">
-                                    <ul class="nav">
-                                        <li><a href="#">Dokumenti</a></li>
-                                        <li><a href="#">Par mums</a></li>
-                                        <li><a href="#">E-veikals</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </header>
+                {% include "core/header.html" %}
             </div>
         </div>
         <div class="table-row full-height">
@@ -70,57 +27,7 @@
         </div>
         <div class="table-row">
             <div class="table-cell">
-                <footer class="footer">
-                    <div class="container">
-                        <div class="gr-4">
-                            <div class="footer-section">
-                                <h6 class="uppercase">Sazināties ar mums</h6>
-                                <div class="wysiwyg">
-                                    <a href="tel:+371 245 03 553">+371 245 03 553</a><br/>
-                                    <a href="mailto:office@ltfa.lv">office@ltfa.lv</a>
-                                </div>
-                            </div>
-                            <div class="footer-section footer-section_extra-offset">
-                                <div class="social-wrap">
-                                    <a href="#" class="social-fb"></a>
-                                    <a href="#" class="social-instagram"></a>
-                                    <a href="#" class="social-tweeter"></a>
-                                    <a href="#" class="social-youtube"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gr-4">
-                            <div class="footer-section">
-                                <h6 class="uppercase">Mūsu rekvizīti</h6>
-                                <div class="wysiwyg">
-                                    Biedrība „Latvijas Telpu futbola asociācija”<br/>
-                                    Reģ.Nr.:40008228829<br/>
-                                    Grostonas 6b, Rīga, Latvija, LV-1013<br/>
-                                    Nor. konts : LV32PARX0016341480001<br/>
-                                    AS „Citadele banka”<br/>
-                                    Kods: PARXLV22
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gr-4">
-                            <div class="footer-section">
-                                <h6 class="uppercase">Apmeklējiet mūs</h6>
-                                <div class="wysiwyg">
-                                    Grostonas 6b, 1 - 412, 4.stāvs<br/>
-                                    Rīga, Latvija<br/>
-                                    LV-1013
-                                </div>
-                            </div>
-                            <div class="footer-section">
-                                <h6 class="uppercase">Darba laiks</h6>
-                                <div class="wysiwyg">
-                                    I-V: 09.00 - 14.00<br/>
-                                    VI-VII: brīvdienas
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                {% include "core/footer.html" %}
             </div>
         </div>
     </div>
