@@ -1,0 +1,37 @@
+.select {
+    appearance: none;
+    background-color: color("background", "dark");
+    color: color("secondary");
+    font-size: em(18);
+    border: 0;
+    border-radius: 0;
+    padding: 16px 40px 15px 19px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
+
+    @include svg ((
+        width: 31,
+        height: 9,
+    )) {
+        @include svg("polygon", (
+            fill: color("secondary"),
+            points: (
+                // x, y
+                3,0
+                6,0
+                6,3
+                9,3
+                9,6
+                6,6
+                6,9
+                3,9
+                3,6
+                0,6
+                0,3
+                3,3
+                3,0
+            )
+        ));
+    }
+}

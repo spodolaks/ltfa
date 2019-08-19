@@ -1,0 +1,56 @@
+.calendar {
+    .calendar-item {
+        display: table;
+        width: 100%;
+        background-color: color("background", "dark");
+        margin-bottom: 7px;
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 10px;
+        padding-bottom: 13px;
+
+        h2 {
+            font-family: $font-russoone;
+            font-weight: 400;
+            color: color("secondary");
+
+            span {
+                color: color();
+                margin: 0px 5px;
+            }
+        }
+        h3 {
+            margin-top: 5px;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+    }
+    .calendar-cell {
+        display: table-cell;
+        vertical-align: middle;
+        padding: 0 32px;
+    }
+    .calendar-time-cell {
+        width: 177px;
+        padding-left: 54px;
+    }
+    .calendar-time {
+        font-size: em(28);
+        font-weight: 200;
+        text-align: center;
+        line-height: em(40, 28);
+        white-space: nowrap;
+
+        hr {
+            background-color: color("background");
+            height: 5px;
+            width: 70px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    &.calendar_overflowed {
+        overflow: hidden;
+        height: 377px;
+    }
+}

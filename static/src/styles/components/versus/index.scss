@@ -1,0 +1,54 @@
+.versus {
+    @include clearfix;
+    background-color: color("background");
+    font-size: em(48);
+    line-height: 1em;
+    font-family: $font-russoone;
+    color: color("secondary");
+    padding-left: 25px;
+    padding-right: 25px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+
+    @include svg ((
+        width: 420,
+        height: 227,
+    )) {
+        @include svg('polygon', (
+            fill: color("background", "darker"),
+            points: (
+                0,0
+                240,0
+                195,227
+                0,227
+                0,0
+            )
+        ));
+    }
+
+    .versus-side {
+        width: 50%;
+        float: left;
+        text-align: center;
+        padding: 27px 10px;
+
+        img {
+            max-width: 100%;
+            margin-bottom: 18px;
+        }
+    }
+
+    &.versus-sm {
+        font-size: em(28);
+        padding-left: 10px;
+        padding-right: 10px;
+
+        .versus-side {
+            img {
+                max-height: 80px;
+                margin-bottom: 15px;
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+@import "./primary";
+@import "./secondary";
+
+.button {
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 0;
+    line-height: normal;
+    vertical-align: top;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    background-color: color('background', 'dark');
+    border: 3px solid color('background', 'dark');
+    color: color('secondary');
+    padding: em(12) em(8) em(11);
+
+    img {
+        vertical-align: middle;
+        margin: em(-12) 0 em(-11) em(-8);
+    }
+    &.button-imaged {
+        text-align: left;
+    }
+    &.button-sm {
+        padding: em(8) em(8) em(7);
+
+        img {
+            margin: em(-8) 0 em(-7) em(-8);
+        }
+    }
+    &.button-lg {
+        font-size: em(18);
+        padding: em(12, 18) em(8, 18) em(11, 18);
+
+        img {
+            margin: em(-15, 18) 0 em(-11, 18) em(-15, 18);
+        }
+    }
+    &.button-block {
+        display: block;
+    }
+    &:disabled, &:disabled {
+        cursor: not-allowed;
+    }
+}

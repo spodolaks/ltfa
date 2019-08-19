@@ -1,0 +1,17 @@
+// Import settings
+@import 'settings';
+
+// Generate classes
+@include gridle_generate_classes ( );
+
+// Container
+
+$container-offset: 30px;
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1280px + ($container-offset * 2);
+    padding-left: $container-offset;
+    padding-right: $container-offset;
+}

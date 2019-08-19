@@ -1,0 +1,21 @@
+.tabs {
+    font-size: em(14);
+    text-transform: uppercase;
+    font-weight: 700;
+    color: color('secondary');
+
+    .tab {
+        display: inline-block;
+        border-bottom: 3px solid transparent;
+        padding: em(8) 0;
+
+        & + .tab {
+            margin-left: em(50);
+        }
+        &:hover,
+        &.active {
+            color: color('primary');
+            border-color: color('secondary');
+        }
+    }
+}

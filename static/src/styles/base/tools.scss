@@ -1,0 +1,151 @@
+/**
+ * =============
+ * === Tools ===
+ * =============
+ */
+@include gridle_generate_custom_class( ('align-center','@','%state') ) {
+    text-align: center;
+}
+@include gridle_generate_custom_class( ('align-left','@','%state') ) {
+    text-align: left;
+}
+@include gridle_generate_custom_class( ('align-right','@','%state') ) {
+    text-align: right;
+}
+@include gridle_generate_custom_class( ('min-height','@','%state') ) {
+    height: 0;
+}
+@include gridle_generate_custom_class( ('min-width','@','%state') ) {
+    width: 0.1%;
+}
+@include gridle_generate_custom_class( ('full-height','@','%state') ) {
+    height: 100%;
+}
+@include gridle_generate_custom_class( ('full-width','@','%state') ) {
+    width: 100%;
+}
+@include gridle_generate_custom_class( ('max-height-100','@','%state') ) {
+    max-height: 100%;
+}
+@include gridle_generate_custom_class( ('max-width-100','@','%state') ) {
+    max-width: 100%;
+}
+@include gridle_generate_custom_class( ('fixed-layout','@','%state') ) {
+    table-layout: fixed;
+}
+@include gridle_generate_custom_class( ('overflow-hidden','@','%state') ) {
+    overflow: hidden;
+}
+@include gridle_generate_custom_class( ('overflow-auto','@','%state') ) {
+    overflow: auto;
+}
+@include gridle_generate_custom_class( ('position-relative','@','%state') ) {
+    position: relative;
+}
+@include gridle_generate_custom_class( ('position-absolute','@','%state') ) {
+    position: absolute;
+}
+@include gridle_generate_custom_class( ('position-fixed','@','%state') ) {
+    position: fixed;
+}
+@include gridle_generate_custom_class( ('table','@','%state') ) {
+    display: table;
+}
+@include gridle_generate_custom_class( ('table-row','@','%state') ) {
+    display: table-row;
+}
+@include gridle_generate_custom_class( ('table-cell','@','%state') ) {
+    display: table-cell;
+    vertical-align: top;
+    float: none!important;
+}
+@include gridle_generate_custom_class( ('v-a-middle','@','%state') ) {
+    vertical-align: middle;
+}
+@include gridle_generate_custom_class( ('v-a-top','@','%state') ) {
+    vertical-align: top;
+}
+@include gridle_generate_custom_class( ('v-a-bottom','@','%state') ) {
+    vertical-align: bottom;
+}
+@include gridle_generate_custom_class( ('margin-top-none','@','%state') ) {
+    margin-top: 0;
+}
+@include gridle_generate_custom_class( ('margin-bottom-none','@','%state') ) {
+    margin-bottom: 0;
+}
+@include gridle_generate_custom_class( ('margin-left-none','@','%state') ) {
+    margin-left: 0;
+}
+@include gridle_generate_custom_class( ('margin-right-none','@','%state') ) {
+    margin-right: 0;
+}
+@include gridle_generate_custom_class( ('margin-none','@','%state') ) {
+    margin: 0;
+}
+@include gridle_generate_custom_class( ('centered','@','%state') ) {
+    margin-left: auto;
+    margin-right: auto;
+}
+@include gridle_generate_custom_class( ('block','@','%state') ) {
+    display: block;
+}
+
+.cover-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.contain-image {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.float-none {
+    float: none !important;
+}
+
+.z-index {
+    z-index: 1;
+}
+
+.avoid-clicks {
+    pointer-events: none;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+@function em($pixels, $context: 14) {
+    @return ($pixels / $context) * 1em;
+}
+@mixin box($width: 100, $height: 100) {
+    position: relative;
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+}
+.offset-wrap {
+    margin-left: em(-5);
+    margin-right: em(-5);
+}
+.offset {
+    padding: em(5);
+}
+@mixin clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}

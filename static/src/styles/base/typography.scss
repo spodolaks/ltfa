@@ -1,0 +1,113 @@
+/**
+ * ==================
+ * === Typography ===
+ * ==================
+ */
+// === Global font settings ===
+body, html {
+    font-size: 14px;
+    line-height: em(20);
+    font-family: $font-raleway;
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    color: color();
+}
+
+// === Headings ===
+.h1, h1, .h2, h2, .h3, h3, .h4, h4, .h5, h5, .h6, h6, {
+    font-weight: 700;
+    margin: 0;
+    line-height: normal;
+}
+
+.h1, h1 {
+    font-size: em(28);
+}
+
+.h2, h2 {
+    font-size: em(24);
+}
+
+.h3, h3 {
+    font-size: em(20);
+}
+
+.h4, h4 {
+    font-size: em(18);
+}
+
+.h5, h5 {
+    font-size: em(16);
+}
+
+.h6, h6 {
+    font-size: em(14);
+}
+
+.title {
+    font-size: em(24);
+    font-weight: 400;
+    font-family: $font-russoone;
+}
+
+.link {
+    display: inline-block;
+    text-transform: uppercase;
+    color: color("secondary");
+    font-weight: 700;
+}
+
+.big, big {
+    font-size: em(18);
+}
+
+.small, small {
+    font-size: em(12);
+}
+
+.italic, em {
+    font-style: italic;
+}
+
+b, strong, .bold {
+    font-weight: 700;
+}
+
+// === Font weights ===
+@for $i from 1 through 9 {
+    .fw-#{($i * 100)} {
+        font-weight: $i * 100;
+    }
+}
+
+// === Other tags ===
+p {
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+ul, ol {
+    padding: 0 0 0 1.3em;
+    margin: 0;
+}
+hr {
+    border: 0;
+    height: 1px;
+    margin: 0;
+    background: color('background', 'darker');
+}
+.wysiwyg {
+    a {
+        text-decoration: none;
+        color: color("secondary");
+        &:hover,&:focus {
+            text-decoration: underline;
+        }
+    }
+    img {
+        max-width: 100%;
+    }
+}

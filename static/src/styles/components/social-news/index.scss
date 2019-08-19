@@ -1,0 +1,31 @@
+.social-news {
+    list-style: none;
+    padding-left: 0;
+
+    h6,.h6 {
+        color: color("secondary");
+        margin-bottom: em(7);
+    }
+    .wysiwyg {
+        a {
+            color: color("danger");
+        }
+    }
+    li {
+        padding: em(5) 0 em(17) em(30);
+        background-size: 24px;
+        background-repeat: no-repeat;
+    }
+    .social-news_instagram {
+        background-image: url("../img/social-instagram.svg");
+    }
+    .social-news_fb {
+        background-image: url("../img/social-fb.svg");
+    }
+    .social-news_tweeter {
+        background-image: url("../img/social-tweeter.svg");
+    }
+    .social-news_youtube {
+        background-image: url("../img/social-youtube.svg");
+    }
+}

@@ -1,0 +1,64 @@
+.carousel {
+    position: relative;
+
+    .carousel-track {
+        height: 526px;
+        overflow: hidden;
+    }
+    .carousel-slide_content {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        top: 0;
+        display: block;
+        padding: em(20) em(23);
+        background-color: color("background", "dark", 0.5);
+
+        .title {
+            margin-bottom: em(4, 24);
+        }
+    }
+    .carousel-slide {
+        position: relative;
+        @extend .cover-image;
+        height: 526px;
+
+        .carousel-slide_content {
+            position: absolute;
+            top: auto;
+            right: auto;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: right;
+            padding-top: em(31);
+        }
+    }
+    .carousel-nav {
+        @extend .row;
+        padding: 9px 0;
+
+        .carousel-nav-button {
+            float: left;
+
+            & + .carousel-nav-button {
+                margin-left: 10px;
+            }
+        }
+    }
+    .carousel-nav-button {
+        display: inline-block;
+        width: 90px;
+        height: 5px;
+        border: 0;
+        border-radius: 0;
+        cursor: pointer;
+        appearance: none;
+        background-color: color("secondary");
+        transition: background .2s ease;
+
+        &.active {
+            background-color: color("danger");
+        }
+    }
+}

@@ -1,0 +1,66 @@
+@import "./big";
+
+.styled-table {
+    width: 100%;
+
+    a {
+        color: color("secondary");
+    }
+    tr {
+        background-color: color("background", "darker");
+    }
+    th, td {
+        padding: 10px 9px 11px;
+        border-bottom: 2px solid color("background");
+
+        &.big {
+            font-size: em(18);
+        }
+    }
+    td {
+        font-size: em(16);
+    }
+    th {
+        text-align: left;
+        font-weight: 700;
+        text-transform: uppercase;
+
+        & + th {
+            text-align: center;
+        }
+    }
+    .table-score {
+        font-weight: 700;
+        font-size: em(18);
+        line-height: 18px;
+        text-align: center;
+        background-color: color("background");
+
+        .table-score_positive {
+            color: color("success");
+        }
+        .table-score_negative {
+            color: color("danger", "dark");
+        }
+    }
+    .styled-table_separated {
+        background-repeat: no-repeat;
+        background-size: 40px 105%;
+        background-position: -1px -1px;
+        @include svg ((
+            width: 40px,
+            height: 40px,
+        )) {
+            @include svg('polygon', (
+                fill: color("background", "dark"),
+                points: (
+                    0,0
+                    27,0
+                    40,40
+                    0,40
+                    0,0
+                )
+            ));
+        }
+    }
+}

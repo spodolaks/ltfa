@@ -1,0 +1,18 @@
+/**
+ * =====================
+ * === Common Styles ===
+ * =====================
+ */
+* {
+    box-sizing: border-box;
+}
+
+:focus {
+    outline: 0;
+}
+
+body,
+html {
+    background-color: color('background');
+    height: 100%;
+}

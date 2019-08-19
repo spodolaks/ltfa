@@ -1,0 +1,58 @@
+/**
+ * ==============
+ * === Colors ===
+ * ==============
+ */
+$colors: (
+    'primary': (
+        'base': #333333,
+        'dark': #000
+    ),
+    'secondary': (
+        'base': #192e59,
+        'light': #254481
+    ),
+    'danger': (
+        'base': #de2527,
+        'dark': #ac2024
+    ),
+    'success':(
+        'base': #348919,
+        'light': #40a320
+    ),
+    'background': (
+        'base': #ffffff,
+        'dark': #f6f6f6,
+        'darker': #e7e9eb,
+    )
+);
+
+@function color($name: 'primary', $variant: 'base', $opacity: 1) {
+    $color: null;
+    $color-spectrum: map-get($colors, $name);
+    @if $color-spectrum {
+        $color: map-get($color-spectrum, $variant);
+    }
+    @if $opacity {
+        $color: rgba($color, $opacity);
+    }
+    @return $color;
+}
+
+//Generate color classes
+@each $name, $variants in $colors {
+    .bg-#{$name} {
+        background-color: map-get($variants, 'base');
+    }
+    .color-#{$name} {
+        color: map-get($variants, 'base');
+    }
+    @each $variant, $color in $variants {
+        .bg-#{$name}-#{$variant} {
+            background-color: $color;
+        }
+        .color-#{$name}-#{$variant} {
+            color: $color;
+        }
+    }
+}

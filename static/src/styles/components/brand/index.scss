@@ -1,0 +1,7 @@
+.brand {
+    display: block;
+    width: 98px;
+    height: 148px;
+    @extend .contain-image;
+    background-image: url("../img/brand.png");
+}

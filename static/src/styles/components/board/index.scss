@@ -1,0 +1,20 @@
+.board {
+    background-color: color("background", "dark");
+
+    .board-content {
+        text-align: center;
+        padding: em(25);
+
+        .title {
+            display: inline-block;
+            padding-top: em(7, 24);
+            padding-bottom: em(7, 24);
+            margin-bottom: em(20, 24);
+            border-bottom: 5px solid color("background");
+        }
+        .wysiwyg {
+            font-size: em(20);
+            line-height: em(24, 20);
+        }
+    }
+}

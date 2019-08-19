@@ -1,0 +1,7 @@
+.button.button-secondary {
+    background-color: color('background');
+    color: color('secondary');
+    border-color: color('danger', 'dark');
+    text-transform: none;
+    font-weight: 400;
+}

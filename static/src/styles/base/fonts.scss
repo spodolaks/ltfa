@@ -1,0 +1,75 @@
+@import 'font-face-generator/mixin';
+
+/**
+ * ====================
+ * === Raleway font ===
+ * ====================
+ */
+@include font-face(
+    $fonts: (
+        'Raleway' : (
+            100 :(
+                normal: 'raleway-thin',
+                italic: 'raleway-thinitalic'
+            ),
+            200 :(
+                normal: 'raleway-extralight',
+                italic: 'raleway-extralightitalic'
+            ),
+            300 :(
+                normal: 'raleway-light',
+                italic: 'raleway-lightitalic'
+            ),
+            400 :(
+                normal: 'raleway-regular',
+                italic: 'raleway-italic'
+            ),
+            500 :(
+                normal: 'raleway-medium',
+                italic: 'raleway-mediumitalic'
+            ),
+            600 :(
+                normal: 'raleway-semibold',
+                italic: 'raleway-semibolditalic'
+            ),
+            700 :(
+                normal: 'raleway-bold',
+                italic: 'raleway-bolditalic'
+            ),
+            800 :(
+                normal: 'raleway-extrabold',
+                italic: 'raleway-extrabolditalic'
+            ),
+            900 :(
+                normal: 'raleway-black',
+                italic: 'raleway-blackitalic'
+            ),
+        )
+    ),
+    $types: 'woff' 'woff2' 'ttf' 'svg' 'eot'
+);
+
+/**
+ * =====================
+ * === RussoOne font ===
+ * =====================
+ */
+@include font-face(
+    $fonts: (
+        'RussoOne' : (
+            400 :(
+                normal: 'russoone-regular',
+            ),
+        )
+    ),
+    $types: 'woff' 'woff2' 'ttf' 'svg' 'eot'
+);
+
+$font-raleway: "Raleway", Arial, sans-serif;
+$font-russoone: "RussoOne", Arial, sans-serif;
+.font-raleway {
+    font-family: $font-raleway;
+}
+.font-russoone {
+    font-family: $font-russoone;
+}

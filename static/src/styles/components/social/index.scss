@@ -1,0 +1,22 @@
+@import "./fb";
+@import "./instagram";
+@import "./tweeter";
+@import "./youtube";
+
+.social-wrap {
+    @extend .row;
+
+    .social {
+        float: left;
+
+        & + .social {
+            margin-left: 5px;
+        }
+    }
+}
+.social {
+    @extend .cover-image;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}

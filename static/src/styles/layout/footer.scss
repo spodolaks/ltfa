@@ -1,0 +1,22 @@
+.footer {
+    padding-top: em(55);
+    padding-bottom: em(105);
+    @extend .cover-image;
+    background-image: url("../img/footer.svg");
+    background-color: color("background", "darker");
+
+    .h1, h1, .h2, h2, .h3, h3, .h4, h4, .h5, h5, .h6, h6, {
+        margin-bottom: em(18);
+    }
+    .wysiwyg {
+        line-height: em(24);
+    }
+    .footer-section {
+        & + .footer-section {
+            margin-top: em(18);
+        }
+        & + .footer-section_extra-offset {
+            padding-top: em(55);
+        }
+    }
+}

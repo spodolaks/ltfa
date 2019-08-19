@@ -1,0 +1,17 @@
+.styled-table.styled-table_big {
+    th, td {
+        border: 1px solid color("background");
+    }
+    .table-score {
+        border: 1px solid color("background", "darker");
+    }
+    .unbordered {
+        border-width: 1px 0;
+    }
+    th {
+        padding: 21px 12px 18px;
+    }
+    td {
+        padding: 11px 10px 9px;
+    }
+}

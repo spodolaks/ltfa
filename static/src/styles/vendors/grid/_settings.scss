@@ -1,0 +1,5 @@
+// import gridle
+@import "gridle/sass/gridle/gridle";
+// setting up the grid
+@include gridle_setup( ( context : 12, gutter-width : 0, ) );
+// @include gridle_register_state( sm, ( max-width: 1024px ) );

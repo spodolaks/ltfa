@@ -1,0 +1,20 @@
+.thumbnail {
+    .thumbnail-img {
+        @include box(420, 270);
+        @extend .cover-image;
+    }
+    .thumbnail-content {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .thumbnail-title {
+        @extend .link;
+    }
+    .thumbnail-subtitle {
+        @extend .bold;
+    }
+    .thumbnail-text {
+        @extend .wysiwyg;
+        margin-top: 15px;
+    }
+}
