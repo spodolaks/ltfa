@@ -1,0 +1,9 @@
+{% load social_tags %}
+{% social as soc %}
+{% if soc|length > 0 %}
+<div class="social-wrap">
+    {% for s in soc %}
+    <a href="{{s.url}}" target="_blank" title="{{s.title}}" class="social-{{s.icon}}"></a>
+    {% endfor %}
+</div>
+{% endif %}

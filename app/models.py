@@ -16,3 +16,20 @@ class Text(models.Model):
     slug = models.SlugField(blank=True, unique=True);
     def __str__(self):
         return self.title
+
+class Social(models.Model):
+    title = models.CharField(max_length=255);
+    url = models.URLField();
+    ICON_CHOICES = [
+        ('fb', 'Facebook'),
+        ('instagram', 'Instagram'),
+        ('tweeter', 'Tweeter'),
+        ('youtube', 'Youtube'),
+    ]
+    icon = models.CharField(
+        max_length=10,
+        choices=ICON_CHOICES,
+        default='fb',
+    )
+    def __str__(self):
+        return self.title

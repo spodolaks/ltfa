@@ -5,12 +5,7 @@
         <div class="header-row">
             <div class="table full-width">
                 <div class="table-cell v-a-middle">
-                    <div class="social-wrap">
-                        <a href="#" class="social-fb"></a>
-                        <a href="#" class="social-instagram"></a>
-                        <a href="#" class="social-tweeter"></a>
-                        <a href="#" class="social-youtube"></a>
-                    </div>
+                    {% include "core/social.html" %}
                 </div>
                 <div class="table-cell v-a-middle">
                     <div class="float-right">
@@ -26,17 +21,17 @@
                 <div class="table-cell">
                     <ul class="nav">
                         {% for p in menus.0 %}
-                            <li><a href="{% url 'page' p.slug %}">{{p.title}}</a></li>
+                            <li><a href="{% url 'page' p.slug %}" title="{{p.title}}">{{p.title}}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
                 <div class="table-cell header-brand">
-                    <a href="{% url 'home' %}" class="brand"></a>
+                    <a href="{% url 'home' %}" class="brand" title="LTFA"></a>
                 </div>
                 <div class="table-cell">
                     <ul class="nav">
                         {% for p in menus.1 %}
-                            <li><a href="{% url 'page' p.slug %}">{{p.title}}</a></li>
+                            <li><a href="{% url 'page' p.slug %}" title="{{p.title}}">{{p.title}}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
