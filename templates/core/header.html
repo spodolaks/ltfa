@@ -1,3 +1,5 @@
+{% load app_tags %}
+{% menu_pages True as menus %}
 <header class="header">
     <div class="container">
         <div class="header-row">
@@ -23,19 +25,19 @@
             <div class="table full-width fixed-layout">
                 <div class="table-cell">
                     <ul class="nav">
-                        <li><a href="{% url 'news' %}">Jaunumi</a></li>
-                        <li><a href="{% url 'tournaments' %}">Turnīri</a></li>
-                        <li><a href="{% url 'events' %}">Notikumi</a></li>
+                        {% for p in menus.0 %}
+                            <li><a href="{% url 'page' p.slug %}">{{p.title}}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="table-cell header-brand">
-                    <a href="{% url 'index' %}" class="brand"></a>
+                    <a href="{% url 'home' %}" class="brand"></a>
                 </div>
                 <div class="table-cell">
                     <ul class="nav">
-                        <li><a href="{% url 'documents' %}">Dokumenti</a></li>
-                        <li><a href="{% url 'aboutus'%}">Par mums</a></li>
-                        <li><a href="{% url 'eshop' %}">E-veikals</a></li>
+                        {% for p in menus.1 %}
+                            <li><a href="{% url 'page' p.slug %}">{{p.title}}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

@@ -1,30 +1,9 @@
 from django.http import HttpResponse
 from django.template import loader
+from django.shortcuts import get_object_or_404, render
+from django.forms.models import model_to_dict
+from .models import Page
 
-def index(request):
-    template = loader.get_template('app/index.html')
-    return HttpResponse(template.render({}, request))
-
-def news(request):
-    template = loader.get_template('app/news.html')
-    return HttpResponse(template.render({}, request))
-
-def tournaments(request):
-    template = loader.get_template('app/tournaments.html')
-    return HttpResponse(template.render({}, request))
-
-def events(request):
-    template = loader.get_template('app/events.html')
-    return HttpResponse(template.render({}, request))
-
-def documents(request):
-    template = loader.get_template('app/documents.html')
-    return HttpResponse(template.render({}, request))
-
-def aboutus(request):
-    template = loader.get_template('app/aboutus.html')
-    return HttpResponse(template.render({}, request))
-
-def eshop(request):
-    template = loader.get_template('app/eshop.html')
-    return HttpResponse(template.render({}, request))
+def pages(request, slug=''):
+    p = get_object_or_404(Page, slug=slug);
+    return render(request, p.layout, model_to_dict(p));
