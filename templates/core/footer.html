@@ -1,13 +1,16 @@
+{% load text_tags %}
+
 <footer class="footer">
     <div class="container">
         <div class="gr-4">
+            {% text 'footer_1' as footer_1 %}
+            {% if footer_1 is not None %}
             <div class="footer-section">
-                <h6 class="uppercase">Sazināties ar mums</h6>
-                <div class="wysiwyg">
-                    <a href="tel:+371 245 03 553">+371 245 03 553</a><br/>
-                    <a href="mailto:office@ltfa.lv">office@ltfa.lv</a>
-                </div>
+                <h6 class="uppercase">{{ footer_1.title }}</h6>
+                <div class="wysiwyg">{{ footer_1.content|safe }}</div>
             </div>
+            {% endif %}
+
             <div class="footer-section footer-section_extra-offset">
                 <div class="social-wrap">
                     <a href="#" class="social-fb"></a>
@@ -18,34 +21,29 @@
             </div>
         </div>
         <div class="gr-4">
+            {% text 'footer_2' as footer_2 %}
+            {% if footer_2 is not None %}
             <div class="footer-section">
-                <h6 class="uppercase">Mūsu rekvizīti</h6>
-                <div class="wysiwyg">
-                    Biedrība „Latvijas Telpu futbola asociācija”<br/>
-                    Reģ.Nr.:40008228829<br/>
-                    Grostonas 6b, Rīga, Latvija, LV-1013<br/>
-                    Nor. konts : LV32PARX0016341480001<br/>
-                    AS „Citadele banka”<br/>
-                    Kods: PARXLV22
-                </div>
+                <h6 class="uppercase">{{ footer_2.title }}</h6>
+                <div class="wysiwyg">{{ footer_2.content|safe }}</div>
             </div>
+            {% endif %}
         </div>
         <div class="gr-4">
+            {% text 'footer_3' as footer_3 %}
+            {% if footer_3 is not None %}
             <div class="footer-section">
-                <h6 class="uppercase">Apmeklējiet mūs</h6>
-                <div class="wysiwyg">
-                    Grostonas 6b, 1 - 412, 4.stāvs<br/>
-                    Rīga, Latvija<br/>
-                    LV-1013
-                </div>
+                <h6 class="uppercase">{{ footer_3.title }}</h6>
+                <div class="wysiwyg">{{ footer_3.content|safe }}</div>
             </div>
+            {% endif %}
+            {% text 'footer_4' as footer_4 %}
+            {% if footer_4 is not None %}
             <div class="footer-section">
-                <h6 class="uppercase">Darba laiks</h6>
-                <div class="wysiwyg">
-                    I-V: 09.00 - 14.00<br/>
-                    VI-VII: brīvdienas
-                </div>
+                <h6 class="uppercase">{{ footer_4.title }}</h6>
+                <div class="wysiwyg">{{ footer_4.content|safe }}</div>
             </div>
+            {% endif %}
         </div>
     </div>
 </footer>

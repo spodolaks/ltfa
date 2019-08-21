@@ -9,3 +9,10 @@ class Page(models.Model):
     layout = models.FilePathField(path='templates/app');
     def __str__(self):
         return self.title
+
+class Text(models.Model):
+    title = models.CharField(max_length=255);
+    content = models.TextField(blank=True);
+    slug = models.SlugField(blank=True, unique=True);
+    def __str__(self):
+        return self.title
