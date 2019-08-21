@@ -1,0 +1,10 @@
+{% load text_tags %}
+
+{% text slug as obj %}
+
+{% if obj is not None %}
+<div class="footer-section">
+    <h6 class="uppercase">{{ obj.title }}</h6>
+    <div class="wysiwyg">{{ obj.content|safe }}</div>
+</div>
+{% endif %}
