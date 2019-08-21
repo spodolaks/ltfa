@@ -1,4 +1,4 @@
-{% load page_tags %}
+{% load page_tags nav_tags %}
 {% menu_pages True as menus %}
 <header class="header">
     <div class="container">
@@ -21,7 +21,7 @@
                 <div class="table-cell">
                     <ul class="nav">
                         {% for p in menus.0 %}
-                            <li><a href="{% url 'page' p.slug %}" title="{{p.title}}">{{p.title}}</a></li>
+                            <li class="{% active p.slug %}"><a href="{% url 'page' p.slug %}" title="{{p.title}}">{{p.title}}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="table-cell">
                     <ul class="nav">
                         {% for p in menus.1 %}
-                            <li><a href="{% url 'page' p.slug %}" title="{{p.title}}">{{p.title}}</a></li>
+                            <li class="{% active p.slug %}"><a href="{% url 'page' p.slug %}" title="{{p.title}}">{{p.title}}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
