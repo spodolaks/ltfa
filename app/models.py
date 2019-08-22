@@ -1,8 +1,10 @@
 from django.db import models
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 class Page(models.Model):
     title = models.CharField(max_length=255);
-    content = models.TextField(blank=True);
+    content = RichTextUploadingField(blank=True);
     slug = models.SlugField(blank=True, unique=True);
     show_in_menu = models.BooleanField(default=False);
     is_home_page = models.BooleanField(default=False);
@@ -12,7 +14,7 @@ class Page(models.Model):
 
 class Text(models.Model):
     title = models.CharField(max_length=255);
-    content = models.TextField(blank=True);
+    content = RichTextUploadingField(blank=True);
     slug = models.SlugField(blank=True, unique=True);
     def __str__(self):
         return self.title
