@@ -35,3 +35,10 @@ class Social(models.Model):
     )
     def __str__(self):
         return self.title
+
+class Sponsor(models.Model):
+    title = models.CharField(max_length=255);
+    url = models.URLField(blank=True);
+    image = models.ImageField();
+    def __str__(self):
+        return self.title

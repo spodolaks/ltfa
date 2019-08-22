@@ -1,0 +1,13 @@
+{% load sponsor_tags %}
+{% sponsors as sponsors_list %}
+<div class="sponsors">
+    {% for sponsor in sponsors_list %}
+    <div class="gr-3 sponsors-offset">
+        {% if sponsor.url|length > 0 %}
+        <a href="{{sponsor.url}}" target="_blank" class="sponsor" style="background-image: url({{sponsor.image.url}})" title="{{sponsor.title}}"></a>
+        {% else %}
+        <span  class="sponsor" style="background-image: url({{sponsor.image.url}})" title="{{sponsor.title}}"></span>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>

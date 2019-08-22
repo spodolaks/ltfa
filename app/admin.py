@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Page, Text, Social
+from .models import Page, Text, Social, Sponsor
 
 class PageAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug')
@@ -10,3 +10,4 @@ class PageAdmin(admin.ModelAdmin):
 admin.site.register(Page, PageAdmin)
 admin.site.register(Text)
 admin.site.register(Social)
+admin.site.register(Sponsor)
