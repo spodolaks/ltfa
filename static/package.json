@@ -25,7 +25,8 @@
     "siema": "^1.5.1"
   },
   "scripts": {
-    "start": "npx gulp"
+    "start": "npx gulp",
+    "build": "npx gulp build"
   },
   "author": "",
   "license": "ISC"

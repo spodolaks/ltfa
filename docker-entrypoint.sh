@@ -14,6 +14,10 @@ done
     echo "Apply database migrations"
     python ./manage.py migrate
 
+    # Build static
+    echo "Build static"
+    cd ./static && npm install && npm run build && cd ../
+
     # Start server
     echo "Starting server"
     python ./manage.py runserver 0.0.0.0:8000

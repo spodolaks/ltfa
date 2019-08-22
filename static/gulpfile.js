@@ -71,6 +71,13 @@ gulp.task("scripts:watch", function() {
 });
 
 /**
+ * ==================
+ * === Build Task ===
+ * ==================
+ */
+gulp.task("build", gulp.parallel("styles", "scripts"))
+
+/**
  * ====================
  * === Default Task ===
  * ====================
