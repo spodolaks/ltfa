@@ -1,0 +1,15 @@
+.pagination {
+    display: block;
+    background-color: color("background", "dark");
+    font-weight: 700;
+    color: color("secondary");
+    padding: 15px;
+    text-align: center;
+
+    a, span {
+        padding: 0 2px;
+        &.active {
+            color: color("danger", "dark");
+        }
+    }
+}

@@ -8,6 +8,15 @@
     .unbordered {
         border-width: 1px 0;
     }
+    .unbordered-r {
+        border-width: 1px 0 1px 1px;
+    }
+    .unbordered-l {
+        border-width: 1px 1px 1px 0;
+    }
+    th, td {
+        height: 57px;
+    }
     th {
         padding: 21px 12px 18px;
     }

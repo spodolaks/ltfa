@@ -1,7 +1,40 @@
-{% extends "base.html" %}
+{% extends "base_sidebar.html" %}
+{% load news_tags %}
 
 {% block title %}LTFA | Jaunumi{% endblock %}
 
-{% block content %}
-    News page
-{% endblock content %}
+{% block inner_content %}
+<div class="section">
+  <div class="offset">
+
+    <div class="section">
+        <div class="offset">
+            <h1 class="title">Jaunumi</h1>
+        </div>
+        <div class="offset"><hr></div>
+        <div class="offset">
+            <a href="#" class="link">Atpakaļ</a>
+        </div>
+    </div>
+    <div class="section">
+        <div class="offset">
+            {% news as newsobj %}
+            {% for n in newsobj %}
+                <a href="#" class="thumbnail thumbnail-inline">
+                    <div class="thumbnail-head">
+                        <div class="thumbnail-img" style="background-image: url({{n.image.url}})"></div>
+                    </div>
+                    <div class="thumbnail-content">
+                        <div class="thumbnail-title">{{n.title}}</div>
+                        <div class="thumbnail-subtitle">{{n.datpublished}}</div>
+                        <div class="thumbnail-text">{{n.content|safe}}</div>
+                    </div>
+                </a>
+                {% empty %}
+                    Nav pievienoti jaunumi
+            {% endfor %}
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

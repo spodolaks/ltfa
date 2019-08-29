@@ -6,7 +6,7 @@
 // === Global font settings ===
 body, html {
     font-size: 14px;
-    line-height: em(20);
+    line-height: (20 / 14);
     font-family: $font-raleway;
     font-smoothing: antialiased;
     -webkit-font-smoothing: antialiased;
@@ -14,10 +14,9 @@ body, html {
 }
 
 // === Headings ===
-.h1, h1, .h2, h2, .h3, h3, .h4, h4, .h5, h5, .h6, h6, {
+.h1, h1, .h2, h2, .h3, h3, .h4, h4, .h5, h5, .h6, h6 {
     font-weight: 700;
     margin: 0;
-    line-height: normal;
 }
 
 .h1, h1 {
@@ -55,6 +54,10 @@ body, html {
     text-transform: uppercase;
     color: color("secondary");
     font-weight: 700;
+
+    &.active {
+        color: color("danger", "dark");
+    }
 }
 
 .big, big {
@@ -108,6 +111,9 @@ hr {
         }
     }
     img {
+        height: auto;
         max-width: 100%;
+        margin-right: em(10);
+        margin-bottom: em(10);
     }
 }

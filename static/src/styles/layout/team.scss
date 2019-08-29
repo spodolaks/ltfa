@@ -1,0 +1,38 @@
+.team-layout {
+    background-color: color("background", "darker");
+
+    .team-layout_head {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+    .team-layout_logo {
+        img {
+            max-width: 100%;
+        }
+    }
+    .team-layout_links {
+        font-size: em(20);
+        padding-left: 25px;
+    }
+    .team-layout_content {
+        font-size: em(16);
+        padding-top: 16px;
+        padding-bottom: 16px;
+
+        .h1, h1, .h2, h2, .h3, h3, .h4, h4, .h5, h5, .h6, h6 {
+            text-transform: uppercase;
+            font-size: em(14, 16);
+            margin-top: em(3);
+            margin-bottom: em(3);
+        }
+    }
+    .team-layout_image {
+        vertical-align: middle;
+        text-align: center;
+        padding: 8px;
+
+        img {
+            max-width: 100%;
+        }
+    }
+}

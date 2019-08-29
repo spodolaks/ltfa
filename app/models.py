@@ -42,3 +42,17 @@ class Sponsor(models.Model):
     image = models.ImageField();
     def __str__(self):
         return self.title
+
+class News(models.Model):
+    title = models.CharField(max_length=255);
+    slug = models.SlugField(max_length=120, blank=True, unique=True);
+    date = models.DateTimeField(auto_now=True);
+    content = RichTextUploadingField(blank=True);
+    image = models.ImageField();
+    class Meta:
+        verbose_name_plural = "News"
+    def __str__(self):
+        return self.title
+
+    def datpublished(self):
+        return self.date.strftime('%d.%m.%Y')

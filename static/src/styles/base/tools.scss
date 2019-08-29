@@ -149,3 +149,37 @@
         clear: both;
     }
 }
+
+@mixin plus($color: color()) {
+    background-repeat: no-repeat;
+    @include svg ((
+        width: 9,
+        height: 9,
+    )) {
+        @include svg("polygon", (
+            fill: $color,
+            points: (
+                // x, y
+                3,0
+                6,0
+                6,3
+                9,3
+                9,6
+                6,6
+                6,9
+                3,9
+                3,6
+                0,6
+                0,3
+                3,3
+                3,0
+            )
+        ));
+    }
+}
+.plus {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    @include plus(color("secondary"));
+}
