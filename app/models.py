@@ -45,10 +45,10 @@ class Sponsor(models.Model):
 
 class News(models.Model):
     title = models.CharField(max_length=255);
-    slug = models.SlugField(max_length=120, blank=True, unique=True);
+    slug = models.SlugField(unique=True);
     date = models.DateTimeField(auto_now=True);
     content = RichTextUploadingField(blank=True);
-    image = models.ImageField();
+    image = models.ImageField(blank=True);
     class Meta:
         verbose_name_plural = "News"
     def __str__(self):

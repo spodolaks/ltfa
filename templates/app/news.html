@@ -19,20 +19,24 @@
     <div class="section">
         <div class="offset">
             {% news as newsobj %}
-            {% for n in newsobj %}
-                <a href="#" class="thumbnail thumbnail-inline">
-                    <div class="thumbnail-head">
-                        <div class="thumbnail-img" style="background-image: url({{n.image.url}})"></div>
-                    </div>
-                    <div class="thumbnail-content">
-                        <div class="thumbnail-title">{{n.title}}</div>
-                        <div class="thumbnail-subtitle">{{n.datpublished}}</div>
-                        <div class="thumbnail-text">{{n.content|safe}}</div>
-                    </div>
-                </a>
-                {% empty %}
-                    Nav pievienoti jaunumi
-            {% endfor %}
+            {% if newsobj|length %}
+                {% for n in newsobj %}
+                    <a href="#" class="thumbnail thumbnail-inline">
+                        <div class="thumbnail-head">
+                            {% if n.image %}
+                                <div class="thumbnail-img" style="background-image: url({{n.image.url}})"></div>
+                            {% endif %}
+                        </div>
+                        <div class="thumbnail-content">
+                            <div class="thumbnail-title">{{n.title}}</div>
+                            <div class="thumbnail-subtitle">{{n.datpublished}}</div>
+                            <div class="thumbnail-text">{{n.content|safe}}</div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <h2>Nav pievienoti jaunumi</h2>
+            {% endif %}
         </div>
     </div>
   </div>
