@@ -1,0 +1,23 @@
+{% extends "base_sidebar.html" %}
+
+{% block inner_content %}
+<div class="section">
+    <div class="offset">
+        <h1 class="title">{{title}}</h1>
+    </div>
+    <div class="offset"><hr></div>
+    <div class="offset">
+        <a href="#" class="link">Atpakaļ</a>
+    </div>
+</div>
+<div class="section">
+    <div class="offset">
+        <div class="wysiwyg">
+            {% if image %}
+                <img src="{{image.url}}" style="float: left;">
+            {% endif %}
+            {{content|safe}}
+        </div>
+    </div>
+</div>
+{% endblock inner_content %}

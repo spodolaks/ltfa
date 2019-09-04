@@ -1,4 +1,5 @@
 from django.db import models
+import re
 from ckeditor_uploader.fields import RichTextUploadingField
 
 
@@ -53,6 +54,8 @@ class News(models.Model):
         verbose_name_plural = "News"
     def __str__(self):
         return self.title
-
+    def excerpt(self, size=255):
+        result = re.sub(re.compile('<.*?>'), '', self.content)
+        return result[0:size];
     def datpublished(self):
         return self.date.strftime('%d.%m.%Y')
