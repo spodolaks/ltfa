@@ -1,0 +1,5 @@
+{% load news_tags page_tags %}
+{% news 3 as newsobj %}
+{% page_by_layout "news" as news_page %}
+{% url 'page' news_page.slug as new_page_url %}
+{% include "core/carousel.html" with data=newsobj master_btn_title="Visi Jaunumi" master_btn_url=new_page_url %}
