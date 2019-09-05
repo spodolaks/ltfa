@@ -27,10 +27,12 @@ def page_by_layout(layout):
         return None
 
 @register.simple_tag
-def compose_page_number(num=""):
+def compose_page_number(num="", max=None):
     try:
         result = int(num)
         if result > 0:
+            if max is not None and result > max:
+                return 1;
             return result;
         else:
             return 1;

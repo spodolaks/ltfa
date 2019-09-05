@@ -1,24 +1,31 @@
 {% extends "base_sidebar.html" %}
-{% load page_tags news_tags %}
+{% load page_tags news_tags mathfilters %}
 {% block inner_content %}
-{% include "core/title.html" with title=title %}
-<div class="section">
-    <div class="offset">
-        {% news as newsobj %}
-        {% if newsobj|length %}
-            {% for n in newsobj %}
-                {% url 'news' n.slug as url %}
-                {% include "core/thumbnail.html" with inline=True url=url image=n.image.url title=n.title subtitle=n.datpublished content=n.excerpt|safe %}
-            {% endfor %}
-        {% else %}
-            <h2>Nav pievienoti jaunumi</h2>
-        {% endif %}
-    </div>
-</div>
-<div class="section">
-    <div class="offset">
-        {% compose_page_number request.GET.page as current_page %}
-        {% include "core/pagination.html" with current=current_page count=216 %}
-    </div>
-</div>
+    {% include "core/title.html" with title=title %}
+    {% with perpage=10 %}
+        {% news_count as nc %}
+        {% with pages_count=nc|intdiv:perpage|add:1 %}
+            {% compose_page_number request.GET.page pages_count as current_page %}
+            <div class="section">
+                <div class="offset">
+                    {% news perpage current_page|sub:1|mul:perpage as newsobj %}
+                    {% if newsobj|length %}
+                        {% for n in newsobj %}
+                            {% url 'news' n.slug as url %}
+                            {% include "core/thumbnail.html" with inline=True url=url image=n.image.url title=n.title subtitle=n.datpublished content=n.excerpt|safe %}
+                        {% endfor %}
+                    {% else %}
+                        <h2>Nav pievienoti jaunumi</h2>
+                    {% endif %}
+                </div>
+            </div>
+            {% if pages_count > 1 %}
+                <div class="section">
+                    <div class="offset">
+                        {% include "core/pagination.html" with current=current_page count=pages_count %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endwith %}
 {% endblock %}
