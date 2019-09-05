@@ -7,18 +7,8 @@
         {% news as newsobj %}
         {% if newsobj|length %}
             {% for n in newsobj %}
-                <a href="{% url 'news' n.slug %}" class="thumbnail thumbnail-inline">
-                    <div class="thumbnail-head">
-                        {% if n.image %}
-                            <div class="thumbnail-img" style="background-image: url({{n.image.url}})"></div>
-                        {% endif %}
-                    </div>
-                    <div class="thumbnail-content">
-                        <div class="thumbnail-title">{{n.title}}</div>
-                        <div class="thumbnail-subtitle">{{n.datpublished}}</div>
-                        <div class="thumbnail-text">{{n.excerpt|safe}}</div>
-                    </div>
-                </a>
+                {% url 'news' n.slug as url %}
+                {% include "core/thumbnail.html" with inline=True url=url image=n.image.url title=n.title subtitle=n.datpublished content=n.excerpt|safe %}
             {% endfor %}
         {% else %}
             <h2>Nav pievienoti jaunumi</h2>
@@ -27,18 +17,7 @@
 </div>
 <div class="section">
     <div class="offset">
-        <div class="pagination">
-            <a href="#">&lt;</a>
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#" class="active">3</a>
-            <a href="#">4</a>
-            <span>.&nbsp;.&nbsp;.</span>
-            <a href="#">214</a>
-            <a href="#">215</a>
-            <a href="#">216</a>
-            <a href="#">&gt;</a>
-        </div>
+        {% include "core/pagination.html" %}
     </div>
 </div>
 {% endblock %}

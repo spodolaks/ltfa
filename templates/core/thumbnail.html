@@ -1,0 +1,12 @@
+<a href="{{url}}" class="thumbnail{% if inline %} thumbnail-inline{% endif %}">
+    <div class="thumbnail-head">
+    {% if image %}
+        <div class="thumbnail-img" style="background-image: url({{image}})"></div>
+    {% endif %}
+    </div>
+    <div class="thumbnail-content">
+        <div class="thumbnail-title">{{title}}</div>
+        <div class="thumbnail-subtitle">{{subtitle}}</div>
+        <div class="thumbnail-text">{{content}}</div>
+    </div>
+</a>

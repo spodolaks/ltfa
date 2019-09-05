@@ -1,8 +1,17 @@
 {% extends "base.html" %}
+{% load page_tags %}
 
 {% block content %}
 <div class="section">
-    <h1>{{title}}</h1>
-    <div class="wysiwyg">{{content|safe}}</div>
+    <div class="row offset-wrap">
+        {% include "core/last_news.html" with count=3 perrow=3 %}
+    </div>
+    {% page_by_layout "news" as news_page %}
+    {% if news_page %}
+    <div class="row">
+        <br>
+        <a href="{% url 'page' news_page.slug %}" class="button button-block">Visi jaunumi</a>
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}

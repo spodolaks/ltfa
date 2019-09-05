@@ -18,3 +18,10 @@ def menu_pages(split=False):
         return p[:l], p[l:];
     else:
         return p;
+
+@register.simple_tag
+def page_by_layout(layout):
+    try:
+        return Page.objects.get(layout='templates/app/'+layout+'.html')
+    except Content.DoesNotExist:
+        return None

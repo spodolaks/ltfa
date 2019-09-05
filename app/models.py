@@ -54,7 +54,7 @@ class News(models.Model):
         verbose_name_plural = "News"
     def __str__(self):
         return self.title
-    def excerpt(self, size=255):
+    def excerpt(self, size=200):
         result = re.sub(re.compile('<.*?>'), '', self.content)
         return result[0:size];
     def datpublished(self):

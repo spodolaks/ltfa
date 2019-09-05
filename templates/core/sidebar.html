@@ -1,4 +1,4 @@
-{% load static %}
+{% load static page_tags %}
 
 <div class="offset">
     <a href="#" class="button button-secondary button-imaged button-block button-lg">
@@ -36,25 +36,16 @@
         <a href="#" class="button button-block">Visas spēles</a>
     </div>
 </div>
+{% page_by_layout "news" as news_page %}
+{% if news_page %}
 <div class="offset">
     <br>
-    <h3>Jaunumi</h3>
+    <h3>{{news_page.title}}</h3>
 </div>
+{% endif %}
+{% include "core/last_news.html" %}
+{% if news_page %}
 <div class="offset">
-    <a href="#" class="thumbnail">
-        <div class="thumbnail-img" style="background-image: url({% static '/images/image-1.jpg' %})"></div>
-        <div class="thumbnail-content">
-            <div class="thumbnail-title">Lorem ipsum dolor sit amet</div>
-            <div class="thumbnail-subtitle">27.04.2019</div>
-            <div class="thumbnail-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna
-                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                ullamco laboris
-            </div>
-        </div>
-    </a>
+    <a href="{% url 'page' news_page.slug %}" class="link">Visi jaunumi</a>
 </div>
-<div class="offset">
-    <a href="#" class="link">Visi jaunumi</a>
-</div>
+{% endif %}
