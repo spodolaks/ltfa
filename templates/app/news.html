@@ -1,5 +1,5 @@
 {% extends "base_sidebar.html" %}
-{% load news_tags %}
+{% load page_tags news_tags %}
 {% block inner_content %}
 {% include "core/title.html" with title=title %}
 <div class="section">
@@ -17,7 +17,8 @@
 </div>
 <div class="section">
     <div class="offset">
-        {% include "core/pagination.html" %}
+        {% compose_page_number request.GET.page as current_page %}
+        {% include "core/pagination.html" with current=current_page count=216 %}
     </div>
 </div>
 {% endblock %}

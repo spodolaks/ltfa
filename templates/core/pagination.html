@@ -1,12 +1,16 @@
-<div class="pagination">
-    <a href="#">&lt;</a>
-    <a href="#">1</a>
-    <a href="#">2</a>
-    <a href="#" class="active">3</a>
-    <a href="#">4</a>
-    <span>.&nbsp;.&nbsp;.</span>
-    <a href="#">214</a>
-    <a href="#">215</a>
-    <a href="#">216</a>
-    <a href="#">&gt;</a>
-</div>
+{% load page_tags %}
+
+{% with current=current|default:1 count=count|default:1 %}
+    {% if count > 1%}
+    <div class="pagination">
+        {% pagination count current as pagination_object %}
+        {% for p in pagination_object %}
+            {% if p.url %}
+                <a href="{{p.url}}"{% if p.active %} class="active"{% endif %}>{{p.title|safe}}</a>
+            {% else %}
+                <span>{{p.title|safe}}</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
