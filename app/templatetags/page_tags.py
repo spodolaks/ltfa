@@ -23,8 +23,16 @@ def menu_pages(split=False):
 def page_by_layout(layout):
     try:
         return Page.objects.get(layout='templates/app/'+layout+'.html')
-    except Content.DoesNotExist:
+    except:
         return None
+
+@register.simple_tag
+def slug_by_layout(layout):
+    page = page_by_layout(layout)
+    if page is not None:
+        return page.slug;
+    else:
+        return layout;
 
 @register.simple_tag
 def compose_page_number(num="", max=None):
@@ -51,7 +59,6 @@ def pagination(count=1, current=1, url="?page={0}"):
             });
         dots_added = False;
         for i in range(1, count + 1):
-            print(dots_added);
             if i <= offset or i > count - offset or (i > current - offset and i < current + offset):
                 dots_added = False;
                 result.append({
