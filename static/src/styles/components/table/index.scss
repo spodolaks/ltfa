@@ -8,6 +8,13 @@
     }
     tr {
         background-color: color("background", "darker");
+        &.white {
+            background-color: color("background");
+
+            th, td {
+                border-color: color("background", "darker");
+            }
+        }
     }
     th, td {
         padding: 10px 9px 11px;

@@ -1,0 +1,28 @@
+.thumbnail {
+    &.thumbnail-inline {
+        display: table;
+        width: 100%;
+
+        & + & {
+            margin-top: 40px;
+        }
+        .thumbnail-head,
+        .thumbnail-content {
+            display: table-cell;
+            vertical-align: top;
+        }
+        .thumbnail-head {
+            width: 229px;
+            padding-right: 30px;
+        }
+        .thumbnail-img {
+            @include box(199, 128);
+        }
+        .thumbnail-content {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 40px;
+            border-bottom: 1px solid color('background', 'darker');
+        }
+    }
+}

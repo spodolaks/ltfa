@@ -1,7 +1,12 @@
+@import "./inline";
 .thumbnail {
     .thumbnail-img {
         @include box(420, 270);
         @extend .cover-image;
+
+        &.thumbnail-img_square {
+            @include box();
+        }
     }
     .thumbnail-content {
         padding-top: 15px;

@@ -1,7 +1,4 @@
-{% extends "base.html" %}
-
-{% block title %}LTFA | E-veikals{% endblock %}
-
-{% block content %}
-    E-shop page
-{% endblock content %}
+{% extends "base_sidebar.html" %}
+{% block inner_content %}
+{% include "core/title.html" with title=title %}
+{% endblock inner_content %}

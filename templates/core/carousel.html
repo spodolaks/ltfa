@@ -1,0 +1,33 @@
+{% if data %}
+<div class="carousel" data-carousel>
+    {% if master_btn_title %}
+    <a href="{{master_btn_url}}" class="carousel-slide_content">
+        <div class="link">{{master_btn_title}}</div>
+    </a>
+    {% endif %}
+    <div class="carousel-track" data-carousel-track>
+        {% for d in data %}
+        <div
+            class="carousel-slide"
+            style="background-image: url({{d.image.url}})">
+            <a href="{{d.url}}" class="carousel-slide_content">
+                {% if d.title %}
+                    <div class="title color-secondary">{{d.title}}</div>
+                {% endif %}
+                {% if d.subtitle %}
+                    <div><big>{{d.subtitle}}</big></div>
+                {% endif %}
+                {% if d.datpublished %}
+                    <div><big>{{d.datpublished}}</big></div>
+                {% endif %}
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="carousel-nav">
+        {% for d in data %}
+            <button class="carousel-nav-button" data-carousel-goto="{{forloop.counter0}}"></button>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,13 @@
+{% load news_tags %}
+{% news count|default:1 as newsobj %}
+{% with perrow=perrow|default:1 %}
+    {% if perrow <= 12 and perrow > 1 %}
+        {% widthratio 12 perrow 1 as grid %}
+    {% endif %}
+    {% for n in newsobj %}
+        {% url 'news' n.slug as url %}
+        <div class="{% if grid %}gr-{{grid}} {% endif %}offset">
+            {% include "core/thumbnail.html" with url=url image=n.image.url title=n.title subtitle=n.datpublished content=n.excerpt|safe %}
+        </div>
+    {% endfor %}
+{% endwith %}

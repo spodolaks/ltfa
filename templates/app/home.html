@@ -1,9 +1,66 @@
 {% extends "base.html" %}
+{% load static page_tags %}
 
 {% block content %}
 <div class="section">
-    <h1>{{title}}</h1>
-    <div class="wysiwyg">{{content|safe}}</div>
-</div>
+    <div class="row offset-wrap">
+        <div class="gr-4">
+            <div class="row">
+                <div class="gr-6 offset">
+                    <a href="#" class="button button-secondary button-imaged button-block button-lg">
+                        <img src="{% static '/images/optibet-btn.jpg' %}">
+                        Optibet Virslīga
+                    </a>
+                </div>
+                <div class="gr-6 offset">
+                    <a href="#" class="button button-secondary button-imaged button-block button-lg">
+                        <img src="{% static '/images/li-btn.jpg' %}">
+                        Latvijas Izlase
+                    </a>
+                </div>
+            </div>
+            <div class="row offset">
+                <div class="gr-12 offset">
+                    <div class="board align-center">
+                        <div class="board-content">
+                            <h2 class="title uppercase">Tuvākā spēle</h2>
 
+                            <div class="wysiwyg">
+                                <b>15 May 2019 20:45</b><br><br>
+                                Optibet Virslīga<br>
+                                Spuņciema Sporta halle
+                            </div>
+                        </div>
+                        <div class="versus">
+                            <div class="versus-side">
+                                <img src="{% static '/images/team-1.png' %}">
+                                <div>Beitar</div>
+                            </div>
+                            <div class="versus-side">
+                                <img src="{% static '/images/team-2.png' %}" alt="">
+                                <div>Nikars</div>
+                            </div>
+                        </div>
+                        <a href="#" class="button button-block">Visas spēles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="gr-8">
+            {% include "core/news_carousel.html" %}
+        </div>
+    </div>
+</div>
+<div class="section">
+    {% page_by_layout "news" as news_page %}
+    <div class="row offset-wrap">
+        {% include "core/last_news.html" with count=3 perrow=3 %}
+    </div>
+    {% if news_page %}
+    <div class="row">
+        <br>
+        <a href="{% url 'page' news_page.slug %}" class="button button-block">Visi jaunumi</a>
+    </div>
+    {% endif %}
+</div>
 {% endblock content %}

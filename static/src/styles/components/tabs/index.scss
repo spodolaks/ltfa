@@ -18,4 +18,20 @@
             border-color: color('secondary');
         }
     }
+
+    .link {
+        padding-top: em(5);
+        padding-bottom: em(5);
+        
+        & + .link {
+            margin-left: em(13);
+        }
+    }
+}
+.tab-panel {
+    display: none;
+
+    &.active {
+        display: block;
+    }
 }

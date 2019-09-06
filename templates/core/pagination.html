@@ -1,0 +1,16 @@
+{% load page_tags %}
+
+{% with current=current|default:1 count=count|default:1 %}
+    {% if count > 1%}
+    <div class="pagination">
+        {% pagination count current as pagination_object %}
+        {% for p in pagination_object %}
+            {% if p.url %}
+                <a href="{{p.url}}"{% if p.active %} class="active"{% endif %}>{{p.title|safe}}</a>
+            {% else %}
+                <span>{{p.title|safe}}</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}

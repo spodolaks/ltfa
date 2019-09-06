@@ -1,0 +1,51 @@
+{% load static page_tags %}
+
+<div class="offset">
+    <a href="#" class="button button-secondary button-imaged button-block button-lg">
+        <img src="{% static '/images/optibet-btn.jpg' %}">
+        Optibet Virslīga
+    </a>
+</div>
+<div class="offset">
+    <a href="#" class="button button-secondary button-imaged button-block button-lg">
+        <img src="{% static '/images/li-btn.jpg' %}">
+        Latvijas Izlase
+    </a>
+</div>
+<div class="offset">
+    <div class="board align-center">
+        <div class="board-content">
+            <h2 class="title uppercase">Tuvākā spēle</h2>
+
+            <div class="wysiwyg">
+                <b>15 May 2019 20:45</b><br><br>
+                Optibet Virslīga<br>
+                Spuņciema Sporta halle
+            </div>
+        </div>
+        <div class="versus versus-sm">
+            <div class="versus-side">
+                <img src="{% static '/images/team-1.png' %}">
+                <div>Beitar</div>
+            </div>
+            <div class="versus-side">
+                <img src="{% static '/images/team-2.png' %}" alt="">
+                <div>Nikars</div>
+            </div>
+        </div>
+        <a href="#" class="button button-block">Visas spēles</a>
+    </div>
+</div>
+{% page_by_layout "news" as news_page %}
+{% if news_page %}
+<div class="offset">
+    <br>
+    <h3>{{news_page.title}}</h3>
+</div>
+{% endif %}
+{% include "core/last_news.html" %}
+{% if news_page %}
+<div class="offset">
+    <a href="{% url 'page' news_page.slug %}" class="link">Visi jaunumi</a>
+</div>
+{% endif %}
