@@ -1,4 +1,9 @@
 {% extends "base_sidebar.html" %}
 {% block inner_content %}
 {% include "core/title.html" with title=title %}
+<div class="section">
+    <div class="wysiwyg">
+        {{content|safe}}
+    </div>
+</div>
 {% endblock inner_content %}
