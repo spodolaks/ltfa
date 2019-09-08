@@ -5,7 +5,7 @@
     <div class="offset">
         <div class="wysiwyg">
             {% if image %}
-                <img src="{{image.url}}" style="float: left;">
+                <img src="{{image.url}}" style="float: left; max-width: 60%;">
             {% endif %}
             {{content|safe}}
         </div>
