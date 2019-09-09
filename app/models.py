@@ -10,6 +10,7 @@ class Page(models.Model):
     show_in_menu = models.BooleanField(default=False);
     is_home_page = models.BooleanField(default=False);
     layout = models.FilePathField(path='templates/app');
+    order = models.IntegerField(default=1)
     def __str__(self):
         return self.title
 

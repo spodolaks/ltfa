@@ -1,10 +1,11 @@
 from django import template
 from ..models import Page
+from math import *
 register = template.Library()
 
 @register.simple_tag
 def pages():
-    return Page.objects.all();
+    return Page.objects.order_by("order");
 
 @register.simple_tag
 def home_page():
@@ -12,9 +13,9 @@ def home_page():
 
 @register.simple_tag
 def menu_pages(split=False):
-    p = Page.objects.filter(show_in_menu=True);
+    p = Page.objects.filter(show_in_menu=True).order_by("order");
     if(split):
-        l = len(p) // 2;
+        l = ceil(len(p)/2);
         return p[:l], p[l:];
     else:
         return p;
