@@ -1,18 +1,64 @@
 from django.db import models
+from django.utils.safestring import mark_safe
 import re
 from ckeditor_uploader.fields import RichTextUploadingField
-
+def getfirst(el):
+    return el[0]
 
 class Page(models.Model):
     title = models.CharField(max_length=255);
+    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE)
     content = RichTextUploadingField(blank=True);
     slug = models.SlugField(blank=True, unique=True);
     show_in_menu = models.BooleanField(default=False);
     is_home_page = models.BooleanField(default=False);
     layout = models.FilePathField(path='templates/app');
-    order = models.IntegerField(default=1)
+    published = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+    sort = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['sort', 'title']
+
+    @classmethod
+    def re_sort(cls):
+        presort = [ (x.get_full_order(), x) for x in cls.objects.all() ];
+        cats = sorted(presort, key=getfirst)
+        print(cats);
+        for i in range(len(cats)):
+            cat = cats[i]
+            cat[1].sort = i
+            super(Page, cat[1]).save()
+
+    def save(self, *args, **kwargs):
+        super(Page, self).save(*args, **kwargs)
+        self.re_sort()
+
+    @mark_safe
+    def get_display_title(self,get_name=True):
+        if self.parent:
+            return u'%s|- %s' % (self.get_spaces(), self.title)
+        else:
+            return u'%s' % self.title
+
+    get_display_title.allow_tags = True
+    get_display_title.admin_order_field = 'sort'
+    get_display_title.short_description = 'Title'
+
+    def get_spaces(self):
+        if self.parent:
+            return u'%s.&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;' % self.parent.get_spaces()
+        return u''
+
+    def get_full_order(self):
+        if self.parent:
+            return u'%s::%s%s' % (self.parent.get_full_order(), self.order, self.title)
+        return u'%s%s' % (self.order, self.title)
+
     def __str__(self):
-        return self.title
+        if self.parent:
+            return u'%s::%s' % (self.parent.__str__(), self.title)
+        return u'%s' % (self.title)
 
 class Text(models.Model):
     title = models.CharField(max_length=255);
