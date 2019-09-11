@@ -25,16 +25,17 @@ class Page(models.Model):
         i = 0;
         for p in pages:
             p.order = i;
-            pages[i + 1:i + 1] = list(p.get_children())
             i += 1;
+            pages[i:i] = list(p.get_children())
         for i in range(len(pages)):
             super(Page, pages[i]).save()
 
-    def save(self, *args, **kwargs):
+    def save(self, reorder=True, *args, **kwargs):
         if self.order < 0:
             self.order = Page.objects.count()
         super(Page, self).save(*args, **kwargs)
-        self.reorder();
+        if reorder:
+            self.reorder();
 
     @mark_safe
     def get_display_title(self,get_name=True):
@@ -46,6 +47,12 @@ class Page(models.Model):
     get_display_title.allow_tags = True
     get_display_title.admin_order_field = 'order'
     get_display_title.short_description = 'Title'
+
+    @mark_safe
+    def order_buttons(self):
+        return "<a href='order/dec/"+str(self.pk)+"'>&#9650;</a><a href='order/inc/"+str(self.pk)+"'>&#9660;</a>"
+    order_buttons.short_description = 'Order'
+    order_buttons.allow_tags = True
 
     def get_spaces(self):
         if self.parent:
