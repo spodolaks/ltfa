@@ -26,7 +26,6 @@ class Migration(migrations.Migration):
                 ('layout', models.FilePathField(path='templates/app')),
                 ('published', models.BooleanField(default=True)),
                 ('order', models.IntegerField(default=0)),
-                ('sort', models.IntegerField(default=0)),
             ],
         ),
     ]

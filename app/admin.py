@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import Page, Text, Social, Sponsor, News
 
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('get_display_title', 'slug', 'published', 'order', 'sort')
-    exclude = ('sort',)
+    list_display = ('get_display_title', 'slug', 'layout', 'published', 'show_in_menu', 'is_home_page')
+    exclude = ('order',)
 
 admin.site.register(Page, PageAdmin)
 admin.site.register(Text)

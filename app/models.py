@@ -14,25 +14,27 @@ class Page(models.Model):
     is_home_page = models.BooleanField(default=False);
     layout = models.FilePathField(path='templates/app');
     published = models.BooleanField(default=True)
-    order = models.IntegerField(default=0)
-    sort = models.IntegerField(default=0)
+    order = models.IntegerField(default=-1)
 
     class Meta:
-        ordering = ['sort', 'title']
+        ordering = ['order', 'title']
 
     @classmethod
-    def re_sort(cls):
-        presort = [ (x.get_full_order(), x) for x in cls.objects.all() ];
-        cats = sorted(presort, key=getfirst)
-        print(cats);
-        for i in range(len(cats)):
-            cat = cats[i]
-            cat[1].sort = i
-            super(Page, cat[1]).save()
+    def reorder(cls):
+        pages = list(cls.objects.filter(parent__isnull=True).order_by("order"))
+        i = 0;
+        for p in pages:
+            p.order = i;
+            pages[i + 1:i + 1] = list(p.get_children())
+            i += 1;
+        for i in range(len(pages)):
+            super(Page, pages[i]).save()
 
     def save(self, *args, **kwargs):
+        if self.order < 0:
+            self.order = Page.objects.count()
         super(Page, self).save(*args, **kwargs)
-        self.re_sort()
+        self.reorder();
 
     @mark_safe
     def get_display_title(self,get_name=True):
@@ -42,7 +44,7 @@ class Page(models.Model):
             return u'%s' % self.title
 
     get_display_title.allow_tags = True
-    get_display_title.admin_order_field = 'sort'
+    get_display_title.admin_order_field = 'order'
     get_display_title.short_description = 'Title'
 
     def get_spaces(self):
@@ -50,14 +52,12 @@ class Page(models.Model):
             return u'%s.&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;' % self.parent.get_spaces()
         return u''
 
-    def get_full_order(self):
-        if self.parent:
-            return u'%s::%s%s' % (self.parent.get_full_order(), self.order, self.title)
-        return u'%s%s' % (self.order, self.title)
+    def get_children(self):
+        return Page.objects.filter(parent=self.pk);
 
     def __str__(self):
         if self.parent:
-            return u'%s::%s' % (self.parent.__str__(), self.title)
+            return u'%s -> %s' % (self.parent.__str__(), self.title)
         return u'%s' % (self.title)
 
 class Text(models.Model):
