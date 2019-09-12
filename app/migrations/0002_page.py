@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='app.Page')),
                 ('title', models.CharField(max_length=255)),
                 ('content', models.TextField(blank=True)),
-                ('slug', models.SlugField(blank=True, unique=True)),
+                ('slug', models.SlugField(blank=True)),
                 ('show_in_menu', models.BooleanField(default=False)),
                 ('is_home_page', models.BooleanField(default=False)),
                 ('layout', models.FilePathField(path='templates/app')),

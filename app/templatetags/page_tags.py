@@ -4,8 +4,8 @@ from math import *
 register = template.Library()
 
 @register.simple_tag
-def pages():
-    return Page.objects.filter(published=True).order_by("order");
+def pages(parent=None):
+    return Page.objects.filter(published=True, parent=parent).order_by("order");
 
 @register.simple_tag
 def home_page():

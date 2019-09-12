@@ -1,9 +1,15 @@
 {% extends "base_sidebar.html" %}
 {% block inner_content %}
 {% include "core/title.html" with title=title %}
+{% load page_tags %}
+{% pages parent=id as documents %}
 <div class="section">
-    <div class="wysiwyg">
-        {{content|safe}}
+    {% for d in documents %}
+    <div class="gr-6">
+        <div class="wysiwyg">
+            {{d.content|safe}}
+        </div>
     </div>
+    {% endfor %}
 </div>
 {% endblock inner_content %}

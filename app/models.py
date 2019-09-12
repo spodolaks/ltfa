@@ -1,7 +1,9 @@
 from django.db import models
 from django.utils.safestring import mark_safe
-import re
+from django.core.exceptions import ValidationError
 from ckeditor_uploader.fields import RichTextUploadingField
+import re
+
 def getfirst(el):
     return el[0]
 
@@ -9,10 +11,10 @@ class Page(models.Model):
     title = models.CharField(max_length=255);
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE)
     content = RichTextUploadingField(blank=True);
-    slug = models.SlugField(blank=True, unique=True);
+    slug = models.SlugField(blank=True);
     show_in_menu = models.BooleanField(default=False);
     is_home_page = models.BooleanField(default=False);
-    layout = models.FilePathField(path='templates/app');
+    layout = models.FilePathField(path='templates/app', default='templates/app/default.html');
     published = models.BooleanField(default=True)
     order = models.IntegerField(default=-1)
 
@@ -29,6 +31,12 @@ class Page(models.Model):
             pages[i:i] = list(p.get_children())
         for i in range(len(pages)):
             super(Page, pages[i]).save()
+
+    def clean_fields(self, exclude = None):
+        super(Page, self).clean_fields(exclude)
+        count = Page.objects.filter(parent=self.parent, slug=self.slug).exclude(pk=self.pk).count();
+        if count > 0:
+            raise ValidationError({'slug': (["Page with this Slug already exists."])})
 
     def save(self, reorder=True, *args, **kwargs):
         if self.order < 0:
