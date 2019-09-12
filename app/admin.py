@@ -5,8 +5,8 @@ from django.urls import path
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('get_display_title', 'slug', 'layout', 'published', 'show_in_menu', 'is_home_page', 'order_buttons')
-    exclude = ('order',)
+    list_display = ('get_display_title', 'url', 'layout', 'published', 'is_visible', 'show_in_menu', 'is_home_page', 'order_buttons')
+    exclude = ('order','url')
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [

@@ -32,7 +32,7 @@ class Page(models.Model):
             i += 1;
             pages[i:i] = list(p.get_children())
         for i in range(len(pages)):
-            super(Page, pages[i]).save()
+            pages[i].save(reorder=False)
 
     def clean_fields(self, exclude = None):
         super(Page, self).clean_fields(exclude)
@@ -44,6 +44,7 @@ class Page(models.Model):
         if self.order < 0:
             self.order = Page.objects.count()
         self.url = self.get_absolute_url();
+
         super(Page, self).save(*args, **kwargs)
         if reorder:
             self.reorder();
