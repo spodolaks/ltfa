@@ -1,17 +1,88 @@
 from django.db import models
-import re
+from django.utils.safestring import mark_safe
+from django.core.exceptions import ValidationError
 from ckeditor_uploader.fields import RichTextUploadingField
+import re
 
+def getfirst(el):
+    return el[0]
 
 class Page(models.Model):
     title = models.CharField(max_length=255);
+    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE)
     content = RichTextUploadingField(blank=True);
-    slug = models.SlugField(blank=True, unique=True);
+    slug = models.SlugField(blank=True);
+    url = models.CharField(max_length=255,blank=True, null=True);
     show_in_menu = models.BooleanField(default=False);
     is_home_page = models.BooleanField(default=False);
-    layout = models.FilePathField(path='templates/app');
+    layout = models.FilePathField(path='templates/app', default='templates/app/default.html');
+    published = models.BooleanField(default=True)
+    is_visible = models.BooleanField(default=True)
+    order = models.IntegerField(default=-1)
+
+    class Meta:
+        ordering = ['order', 'title']
+
+    @classmethod
+    def reorder(cls):
+        pages = list(cls.objects.filter(parent__isnull=True).order_by("order"))
+        i = 0;
+        for p in pages:
+            p.order = i;
+            i += 1;
+            pages[i:i] = list(p.get_children())
+        for i in range(len(pages)):
+            super(Page, pages[i]).save()
+
+    def clean_fields(self, exclude = None):
+        super(Page, self).clean_fields(exclude)
+        count = Page.objects.filter(parent=self.parent, slug=self.slug).exclude(pk=self.pk).count();
+        if count > 0:
+            raise ValidationError({'slug': (["Page with this Slug already exists."])})
+
+    def save(self, reorder=True, *args, **kwargs):
+        if self.order < 0:
+            self.order = Page.objects.count()
+        self.url = self.get_absolute_url();
+        super(Page, self).save(*args, **kwargs)
+        if reorder:
+            self.reorder();
+
+    @mark_safe
+    def get_display_title(self,get_name=True):
+        if self.parent:
+            return u'%s|- %s' % (self.get_spaces(), self.title)
+        else:
+            return u'%s' % self.title
+
+    get_display_title.allow_tags = True
+    get_display_title.admin_order_field = 'order'
+    get_display_title.short_description = 'Title'
+
+    @mark_safe
+    def order_buttons(self):
+        return "<a href='order/dec/"+str(self.pk)+"'>&#9650;</a><a href='order/inc/"+str(self.pk)+"'>&#9660;</a>"
+    order_buttons.short_description = 'Order'
+    order_buttons.allow_tags = True
+
+    def get_spaces(self):
+        if self.parent:
+            return u'%s.&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;' % self.parent.get_spaces()
+        return u''
+
+    def get_children(self):
+        return Page.objects.filter(parent=self.pk);
+
+    def get_absolute_url(self):
+        if self.parent:
+            return self.parent.get_absolute_url() + self.slug + '/'
+        else:
+            return '/' + self.slug + ('/' if self.slug != '' else '')
+
     def __str__(self):
-        return self.title
+        if self.parent:
+            return u'%s -> %s' % (self.parent.__str__(), self.title)
+        return u'%s' % (self.title)
 
 class Text(models.Model):
     title = models.CharField(max_length=255);

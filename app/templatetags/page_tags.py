@@ -1,20 +1,21 @@
 from django import template
 from ..models import Page
+from math import *
 register = template.Library()
 
 @register.simple_tag
-def pages():
-    return Page.objects.all();
+def pages(parent=None):
+    return Page.objects.filter(published=True, parent=parent).order_by("order");
 
 @register.simple_tag
 def home_page():
-    return Page.objects.get(is_home_page=True);
+    return Page.objects.order_by("order").get(is_home_page=True, published=True);
 
 @register.simple_tag
 def menu_pages(split=False):
-    p = Page.objects.filter(show_in_menu=True);
+    p = Page.objects.filter(show_in_menu=True, published=True).order_by("order");
     if(split):
-        l = len(p) // 2;
+        l = ceil(len(p)/2);
         return p[:l], p[l:];
     else:
         return p;
@@ -22,7 +23,7 @@ def menu_pages(split=False):
 @register.simple_tag
 def page_by_layout(layout):
     try:
-        return Page.objects.get(layout='templates/app/'+layout+'.html')
+        return Page.objects.order_by("order").get(layout='templates/app/'+layout+'.html', published=True)
     except:
         return None
 
