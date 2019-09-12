@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='app.Page')),
                 ('title', models.CharField(max_length=255)),
                 ('content', models.TextField(blank=True)),
+                ('image', models.ImageField(blank=True, upload_to='')),
                 ('slug', models.SlugField(blank=True)),
                 ('url', models.CharField(blank=True, max_length=255, null=True)),
                 ('show_in_menu', models.BooleanField(default=False)),

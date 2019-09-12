@@ -1,4 +1,47 @@
 {% extends "base_sidebar.html" %}
 {% block inner_content %}
 {% include "core/title.html" with title=title %}
+{% load page_tags %}
+{% pages parent=id as aboutus_pages %}
+<div class="section">
+    <div class="offset">
+        <div class="accordion">
+            {% for p in aboutus_pages %}
+                <div class="accordion_wrap">
+                    <a href="#" class="accordion_title{% if forloop.counter == 1%} active{% endif %}" data-accordion>{{p.title}} <span class="plus"></span></a>
+                    <div class="accordion_content">
+                        {% pages parent=p.id as aboutus_child %}
+                        {% if aboutus_child %}
+                            {% for child in aboutus_child %}
+                                <div class="section offset-wrap">
+                                    <div class="offset">
+                                        <h6>{{child.title}}</h6>
+                                    </div>
+                                    <div class="row">
+                                        {% pages parent=child.id as aboutus_subchild %}
+                                        {% for subchild in aboutus_subchild %}
+                                        <div class="gr-3 offset">
+                                            <div class="thumbnail">
+                                                <div class="thumbnail-img thumbnail-img_square" style="background-image: url('{{subchild.image.url}}')"></div>
+                                                <div class="thumbnail-content">
+                                                    <h6 class="uppercase">{{subchild.content|striptags}}</h6>
+                                                    <h5 class="fw-400">{{subchild.title}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                        <div class="wysiwyg">
+                            {{p.content|safe}}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock inner_content %}

@@ -11,6 +11,7 @@ class Page(models.Model):
     title = models.CharField(max_length=255);
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE)
     content = RichTextUploadingField(blank=True);
+    image = models.ImageField(blank=True);
     slug = models.SlugField(blank=True);
     url = models.CharField(max_length=255,blank=True, null=True);
     show_in_menu = models.BooleanField(default=False);
