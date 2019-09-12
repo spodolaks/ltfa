@@ -21,11 +21,16 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=255)),
                 ('content', models.TextField(blank=True)),
                 ('slug', models.SlugField(blank=True)),
+                ('url', models.CharField(blank=True, max_length=255, null=True)),
                 ('show_in_menu', models.BooleanField(default=False)),
                 ('is_home_page', models.BooleanField(default=False)),
-                ('layout', models.FilePathField(path='templates/app')),
+                ('layout', models.FilePathField(path='templates/app', default='templates/app/default.html')),
                 ('published', models.BooleanField(default=True)),
-                ('order', models.IntegerField(default=0)),
+                ('is_visible', models.BooleanField(default=True)),
+                ('order', models.IntegerField(default=-1)),
             ],
+            options={
+                'ordering': ['order', 'title'],
+            },
         ),
     ]

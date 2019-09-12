@@ -12,10 +12,12 @@ class Page(models.Model):
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE)
     content = RichTextUploadingField(blank=True);
     slug = models.SlugField(blank=True);
+    url = models.CharField(max_length=255,blank=True, null=True);
     show_in_menu = models.BooleanField(default=False);
     is_home_page = models.BooleanField(default=False);
     layout = models.FilePathField(path='templates/app', default='templates/app/default.html');
     published = models.BooleanField(default=True)
+    is_visible = models.BooleanField(default=True)
     order = models.IntegerField(default=-1)
 
     class Meta:
@@ -41,6 +43,7 @@ class Page(models.Model):
     def save(self, reorder=True, *args, **kwargs):
         if self.order < 0:
             self.order = Page.objects.count()
+        self.url = self.get_absolute_url();
         super(Page, self).save(*args, **kwargs)
         if reorder:
             self.reorder();
@@ -69,6 +72,12 @@ class Page(models.Model):
 
     def get_children(self):
         return Page.objects.filter(parent=self.pk);
+
+    def get_absolute_url(self):
+        if self.parent:
+            return self.parent.get_absolute_url() + self.slug + '/'
+        else:
+            return '/' + self.slug + ('/' if self.slug != '' else '')
 
     def __str__(self):
         if self.parent:
