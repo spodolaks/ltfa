@@ -5,15 +5,15 @@ register = template.Library()
 
 @register.simple_tag
 def pages(parent=None):
-    return Page.objects.filter(published=True, parent=parent).order_by("order");
+    return Page.objects.filter(parent=parent, published=True).order_by("order");
 
 @register.simple_tag
 def home_page():
-    return Page.objects.order_by("order").get(is_home_page=True, published=True);
+    return Page.objects.order_by("order").get(is_home_page=True, published=True, is_visible=True);
 
 @register.simple_tag
 def menu_pages(split=False):
-    p = Page.objects.filter(show_in_menu=True, published=True).order_by("order");
+    p = Page.objects.filter(show_in_menu=True, published=True, is_visible=True).order_by("order");
     if(split):
         l = ceil(len(p)/2);
         return p[:l], p[l:];
@@ -23,7 +23,7 @@ def menu_pages(split=False):
 @register.simple_tag
 def page_by_layout(layout):
     try:
-        return Page.objects.order_by("order").get(layout='templates/app/'+layout+'.html', published=True)
+        return Page.objects.order_by("order").get(layout='templates/app/'+layout+'.html', published=True, is_visible=True)
     except:
         return None
 
