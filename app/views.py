@@ -9,7 +9,7 @@ def pages(request, url=''):
         composed_url = '/';
     else:
         composed_url = ('' if url[0] == '/' else '/') + url + ('' if url[len(url) - 1] == '/' else '/')
-    p = get_object_or_404(Page, url=composed_url, is_visible=True)
+    p = get_object_or_404(Page, url=composed_url, is_visible=True, published=True)
     return render(request, p.layout, model_to_dict(p));
 
 def news(request, slug=''):
