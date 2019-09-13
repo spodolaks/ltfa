@@ -1,4 +1,9 @@
 {% extends "base_sidebar.html" %}
 {% block inner_content %}
 {% include "core/title.html" with title=title %}
+{% load api_tags %}
+{% get_competitions as competitions %}
+{% for competition in competitions %}
+    {% get_matches_table competitionfifaid=competition.competitionFifaId %}
+{% endfor %}
 {% endblock inner_content %}

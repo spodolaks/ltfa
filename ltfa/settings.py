@@ -154,3 +154,4 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
+API_URL = "http://93.188.161.113:8000"
