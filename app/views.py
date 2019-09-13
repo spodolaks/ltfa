@@ -15,3 +15,6 @@ def pages(request, url=''):
 def news(request, slug=''):
     p = get_object_or_404(News, slug=slug);
     return render(request, "app/default.html", model_to_dict(p));
+
+def team(request, slug=''):
+    return render(request, "app/team.html");
