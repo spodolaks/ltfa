@@ -1,9 +1,43 @@
 {% extends "base_sidebar.html" %}
+{% load static %}
 {% block inner_content %}
-{% include "core/title.html" with title=title %}
-{% load api_tags %}
-{% get_competitions as competitions %}
-{% for competition in competitions %}
-    {% get_matches_table competitionfifaid=competition.competitionFifaId %}
-{% endfor %}
+<div class="section">
+    <div class="offset">
+        <select name="filter" class="select">
+            <option>2015 / 2016</option>
+            <option>2016 / 2017</option>
+            <option>2017 / 2018</option>
+            <option selected="">2018 / 2019</option>
+        </select>
+    </div>
+    <div class="offset">
+        <br>
+        <div class="tabs">
+            {% for competition in competitions %}
+                {% if competition.internationalName and competition.competitionFifaId %}
+                    <a
+                        href="?competitionFifaId={{competition.competitionFifaId}}"
+                        class="tab">
+                        {{competition.internationalName}}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <br>
+        <br>
+    </div>
+    <div class="offset">
+        <div class="logo-list">
+            <a href="#"><img src="{% static 'images/team-logo-1.png' %}"></a>
+            <a href="#"><img src="{% static 'images/team-logo-2.png' %}"></a>
+            <a href="#"><img src="{% static 'images/team-logo-3.png' %}"></a>
+            <a href="#"><img src="{% static 'images/team-logo-4.png' %}"></a>
+            <a href="#"><img src="{% static 'images/team-logo-5.png' %}"></a>
+            <a href="#"><img src="{% static 'images/team-logo-6.png' %}"></a>
+            <a href="#"><img src="{% static 'images/team-logo-7.png' %}"></a>
+            <a href="#"><img src="{% static 'images/team-logo-8.png' %}"></a>
+            <a href="#"><img src="{% static 'images/team-logo-9.png' %}"></a>
+        </div>
+    </div>
+</div>
 {% endblock inner_content %}

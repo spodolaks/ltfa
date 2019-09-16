@@ -3,6 +3,7 @@ from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.forms.models import model_to_dict
 from .models import Page, News
+from .utils.api import Api
 
 def pages(request, url=''):
     if url == '':
@@ -10,7 +11,19 @@ def pages(request, url=''):
     else:
         composed_url = ('' if url[0] == '/' else '/') + url + ('' if url[len(url) - 1] == '/' else '/')
     p = get_object_or_404(Page, url=composed_url, is_visible=True, published=True)
-    return render(request, p.layout, model_to_dict(p));
+    layout = p.layout.replace("templates/app/","").replace(".html","")
+    if layout in globals():
+        return globals()[layout](request, p)
+    else:
+        return render(request, p.layout, model_to_dict(p));
+
+def tournaments(request, page):
+    data = model_to_dict(page);
+    api = Api()
+    data.update({
+        "competitions": api.get_competitions()
+    })
+    return render(request, page.layout, data);
 
 def news(request, slug=''):
     p = get_object_or_404(News, slug=slug);

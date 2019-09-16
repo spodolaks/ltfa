@@ -1,23 +1,17 @@
 from django import template
 register = template.Library()
-import requests
-import json
-from django.conf import settings
 import datetime
+from ..utils.api import Api
+
+api = Api();
 
 @register.simple_tag
-def get_competitions(from_data=2000, to_data=(datetime.datetime.now().year + 1)):
-    try:
-        return requests.get(settings.API_URL+"/competitions", params={'from':from_data, 'to':to_data}).json();
-    except:
-        return [];
+def get_competitions(from_data=(datetime.datetime.now().year), to_data=(datetime.datetime.now().year + 1)):
+    return api.get_competitions(from_data, to_data);
 
 @register.simple_tag
 def get_matches(competitionfifaid):
-    try:
-        return requests.get(settings.API_URL+"/matches", params={'competitionfifaid':competitionfifaid}).json();
-    except:
-        return [];
+    return api.get_matches(competitionfifaid)
 
 @register.simple_tag
 def get_matches_table(competitionfifaid):
@@ -32,24 +26,11 @@ def get_matches_table(competitionfifaid):
             teams.append({'teamFifaId':team2['teamFifaId']});
 
     return teams;
-        # team1 = m['matchTeams'][0]['teamFifaId'];
-        # team2 = m['matchTeams'][1]['teamFifaId'];
-        # if team1 not in teams:
-        #     teams.append(team1);
-        # if team2 not in teams:
-        #     teams.append(team2);
-    # return matches;
 
 @register.simple_tag
 def get_matchevents(matchfifaid):
-    try:
-        return requests.get(settings.API_URL+"/matchevents", params={'matchfifaid':matchfifaid}).json();
-    except:
-        return [];
+    return api.get_matchevents(matchfifaid);
 
 @register.simple_tag
-def get_person(matchfifaid):
-    try:
-        return requests.get(settings.API_URL+"/person", params={'personfifaid':personfifaid}).json();
-    except:
-        return [];
+def get_person(personfifaid):
+    return get_person(personfifaid);
