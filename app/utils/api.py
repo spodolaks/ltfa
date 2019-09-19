@@ -1,6 +1,7 @@
 from django.conf import settings
 import requests
 import datetime
+from .api_models import Competitions, Matches
 
 class Api:
     def __init__(self, url = settings.API_URL):
@@ -13,10 +14,10 @@ class Api:
             return [];
 
     def get_competitions(self, from_data=(datetime.datetime.now().year - 1), to_data=(datetime.datetime.now().year)):
-        return self.request("/competitions", {'from':from_data, 'to':to_data});
+        return Competitions(self.request("/competitions", {'from':from_data, 'to':to_data}));
 
     def get_matches(self, competitionfifaid):
-        return self.request("/matches", {'competitionfifaid':competitionfifaid});
+        return Matches(self.request("/matches", {'competitionfifaid':competitionfifaid}));
 
     def get_matches_table(self, competitionfifaid):
         matches = self.get_matches(competitionfifaid);
@@ -54,8 +55,15 @@ class Api:
                 "points": away_points
             });
             result[away_team_ID]["points"] += away_points;
+            resultarr = [];
 
-        return result;
+            for r in result:
+                resultarr.append(result[r]);
+
+            resultarr.sort(key=lambda o: o["points"], reverse=True)
+
+
+        return resultarr;
 
     def get_matchevents(self, matchfifaid):
         return self.request("/matchevents", {'matchfifaid':matchfifaid});

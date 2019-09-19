@@ -20,13 +20,14 @@ def pages(request, url=''):
 def tournaments(request, page):
     data = model_to_dict(page);
     api = Api()
-    competitions = api.get_competitions();
+    competitions = api.get_competitions().list;
     current_competition = competitions[0] if len(competitions) > 0 else {};
-    current_competition_ID = current_competition['competitionFifaId'] if 'competitionFifaId' in current_competition else '';
-    matches_table = api.get_matches_table(current_competition_ID);
+    current_competition_ID =  current_competition.competitionFifaId;
+    matches = api.get_matches(current_competition_ID);
+    print(matches)
     data.update({
         "competitions": competitions,
-        "matches_table": matches_table
+        "matches": matches
     })
     return render(request, page.layout, data);
 
