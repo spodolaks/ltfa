@@ -23,8 +23,7 @@ def tournaments(request, page):
     competitions = api.get_competitions().list;
     current_competition = competitions[0] if len(competitions) > 0 else {};
     current_competition_ID =  current_competition.competitionFifaId;
-    matches = api.get_matches(current_competition_ID);
-    print(matches)
+    matches = api.get_matches_table(current_competition_ID);
     data.update({
         "competitions": competitions,
         "matches": matches
