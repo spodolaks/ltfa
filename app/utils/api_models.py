@@ -95,7 +95,7 @@ class MatchTeams:
     def getID(self, nature = "HOME"):
         for l in self.list:
             if l.teamNature == nature:
-                return l.matchFifaId
+                return l.teamFifaId
         return "";
 
 class MatchTeam:
@@ -106,51 +106,79 @@ class MatchTeam:
         self.teamNature = props['teamNature'] if 'teamNature' in props else ''
 
 class MatchesTable:
+    table = [];
     def __init__(self, props):
         matches = Matches(props);
-        result = {};
+        self.__table = {};
         for match in matches.list:
             home_team_ID = match.matchTeams.getHomeID()
-            away_team_ID = match.matchTeams.getAwayID();
+            away_team_ID = match.matchTeams.getAwayID()
             phase = match.matchPhases.getSecondPhase()
-            home_score = phase.homeScore;
-            away_score = phase.awayScore;
-            home_points = self.ponts(home_score, away_score)
-            away_points = self.ponts(away_score, home_score)
+            self.__append_match(home_team_ID, away_team_ID, [phase.homeScore, phase.awayScore])
+        self.__sort_table();
 
-            if home_team_ID not in result:
-                result[home_team_ID] = {
-                    "id": home_team_ID,
-                    "points": 0,
-                    "matches": []
-                }
-            if away_team_ID not in result:
-                result[away_team_ID] = {
-                    "id": away_team_ID,
-                    "points": 0,
-                    "matches": []
-                }
+    def __init_team(self, id = 0):
+        if id not in self.__table:
+            self.__table[id] = {
+                "id": id,
+                "points": 0,
+                "points_percents": 0,
+                "total_score": [0,0],
+                "opponents": {}
+            }
+        return self.__table;
 
-            result[home_team_ID]["matches"].append({
-                "id": away_team_ID,
-                "score": [home_score, away_score],
-                "points": home_points
-            });
-            result[home_team_ID]["points"] += home_points;
+    def __init_opponent(self, id = 0, parent_id=0):
+        self.__init_team(parent_id);
+        if id not in self.__table[parent_id]["opponents"]:
+            self.__table[parent_id]["opponents"][id] = {
+                "id": id,
+                "matches": []
+            }
+        return self.__table;
 
-            result[away_team_ID]["matches"].append({
-                "id": home_team_ID,
-                "score": [away_score, home_score],
-                "points": away_points
-            });
-            result[away_team_ID]["points"] += away_points;
-            resultarr = [];
+    def __append_match(self, id = 0, opponent_id = 0, score= [0,0]):
+        away_score = [score[1], score[0]]
+        home_points = self.__points(score[0], score[1])
+        away_points = self.__points(score[1], score[0])
+        self.__init_opponent(opponent_id, id);
+        self.__init_opponent(id, opponent_id);
+        self.__table[id]["opponents"][opponent_id]["matches"].append({
+            "score": score,
+            "points": home_points
+        });
+        self.__table[opponent_id]["opponents"][id]["matches"].append({
+            "score": away_score,
+            "points": away_points
+        });
+        self.__table[id]["points"] += home_points;
+        self.__table[id]["total_score"][0] += score[0];
+        self.__table[id]["total_score"][1] += score[1];
+        self.__table[opponent_id]["points"] += away_points;
+        self.__table[opponent_id]["total_score"][0] += away_score[0];
+        self.__table[opponent_id]["total_score"][1] += away_score[1];
+        return self.__table
 
-            for r in result:
-                resultarr.append(result[r]);
-
-    def ponts(self, a = 0, b = 0):
+    def __points(self, a = 0, b = 0):
         return 3 if a > b else 1 if a == b else 0
+
+    def __sort_table(self):
+        self.table = [];
+        for t in self.__table:
+            self.table.append(self.__table[t]);
+        self.table.sort(key=lambda o: o["points"], reverse=True)
+        ids = [];
+        for t in self.table:
+            ids.append(t["id"]);
+
+        for t in self.table:
+            opponents = [];
+            for id in ids:
+                if id in t["opponents"]:
+                    opponents.append(t["opponents"][id]);
+            t["opponents"] = opponents;
+
+        return self.table
 
 class Teams:
     pass

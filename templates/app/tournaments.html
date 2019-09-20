@@ -39,8 +39,50 @@
             <a href="#"><img src="{% static 'images/team-logo-9.png' %}"></a>
         </div>
     </div>
+</div>
+<div class="section">
     <div class="offset">
-        {{matches.list}}
+        <div class="tabs">
+            <a href="#table" data-tab="" class="link active">Tabula</a>
+            <a href="#calendar" data-tab="" class="link">Kalendārs</a>
+            <a href="#statistic" data-tab="" class="link">Statistika</a>
+        </div>
+    </div>
+    <div class="offset">
+        <div class="tab-panel active" data-tab-panel="table">
+            <table class="styled-table styled-table_big">
+                <tr>
+                    <th colspan="2">Optibet Virslīgas komandas</th>
+                    {% for m in matches_table %}
+                    <th class="big">{{ forloop.counter }}</th>
+                    {% endfor %}
+                    <th colspan="2">Punkti</th>
+                    <th>Vārti</th>
+                </tr>
+                {% for m in matches_table %}
+                {% with place=forloop.counter %}
+                <tr class="styled-table_separated">
+                    <td class="big unbordered"><b>{{place}}</b></td>
+                    <td class="big unbordered"><a href="#">{{m.id}}</a></td>
+                    {% for op in m.opponents %}
+                        {% if place is 1 and forloop.counter is 1%}<td></td>{% endif %}
+                        <td class="table-score">
+                            {% for m in op.matches %}
+                            <div class="{% if m.score.0 > m.score.1 %}table-score_positive{% elif m.score.0 < m.score.1 %}table-score_negative{% endif %}">
+                                {{m.score.0}}:{{m.score.1}}
+                            </div>
+                            {% endfor %}
+                        </td>
+                        {% if place is forloop.counter|add:1 %}<td></td>{% endif %}
+                    {% endfor %}
+                    <td class="align-center"><b>{{m.points}}</b></td>
+                    <td class="align-center"><b>71%</b></td>
+                    <td class="align-center"><b>{{m.total_score.0}}:{{m.total_score.1}}</b></td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 {% endblock inner_content %}
