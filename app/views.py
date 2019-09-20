@@ -24,9 +24,11 @@ def tournaments(request, page):
     current_competition = competitions[0] if len(competitions) > 0 else {};
     current_competition_ID =  current_competition.competitionFifaId;
     matches_table = api.get_matches_table(current_competition_ID);
+    teams = api.get_teams(current_competition_ID);
     data.update({
         "competitions": competitions,
-        "matches_table": matches_table.table
+        "matches_table": matches_table.table,
+        "teams": teams.list
     })
     return render(request, page.layout, data);
 

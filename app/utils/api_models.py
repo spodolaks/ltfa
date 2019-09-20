@@ -115,6 +115,7 @@ class MatchesTable:
             away_team_ID = match.matchTeams.getAwayID()
             phase = match.matchPhases.getSecondPhase()
             self.__append_match(home_team_ID, away_team_ID, [phase.homeScore, phase.awayScore])
+        self.__points_percents();
         self.__sort_table();
 
     def __init_team(self, id = 0):
@@ -122,7 +123,6 @@ class MatchesTable:
             self.__table[id] = {
                 "id": id,
                 "points": 0,
-                "points_percents": 0,
                 "total_score": [0,0],
                 "opponents": {}
             }
@@ -170,18 +170,35 @@ class MatchesTable:
         ids = [];
         for t in self.table:
             ids.append(t["id"]);
-
         for t in self.table:
             opponents = [];
             for id in ids:
                 if id in t["opponents"]:
                     opponents.append(t["opponents"][id]);
             t["opponents"] = opponents;
-
         return self.table
 
+    def __points_percents(self):
+        pass
+
 class Teams:
-    pass
+    list = {}
+    def __init__(self, props):
+        self.list = {}
+        if type(props) == list:
+            for pr in props:
+                team = Team(pr);
+                self.list[team.teamFifaId] = team;
 
 class Team:
-    pass
+    def __init__(self, props):
+        self.competitionFifaId = props['competitionFifaId'] if 'competitionFifaId' in props else ""
+        self.country = props['country'] if 'country' in props else ""
+        self.internationalName = props['internationalName'] if 'internationalName' in props else ""
+        self.internationalShortName = props['internationalShortName'] if 'internationalShortName' in props else ""
+        self.organisationFifaId = props['organisationFifaId'] if 'organisationFifaId' in props else ""
+        self.organisationName = props['organisationName'] if 'organisationName' in props else ""
+        self.organisationNature = props['organisationNature'] if 'organisationNature' in props else ""
+        self.organisationShortName = props['organisationShortName'] if 'organisationShortName' in props else ""
+        self.status = props['status'] if 'status' in props else ""
+        self.teamFifaId = props['teamFifaId'] if 'teamFifaId' in props else ""
