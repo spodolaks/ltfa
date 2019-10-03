@@ -5,6 +5,6 @@ from .templatetags.page_tags import slug_by_layout
 urlpatterns = [
     path('', views.pages, name='home'),
     path(slug_by_layout('news')+'/<slug:slug>/', views.news, name='news'),
-    path('team/', views.team, name='team'),
+    path('team/<int:id>/', views.team, name='team'),
     re_path('^(?P<url>.*)/$', views.pages, name='page'),
 ]

@@ -4,9 +4,6 @@ from django.core.exceptions import ValidationError
 from ckeditor_uploader.fields import RichTextUploadingField
 import re
 
-def getfirst(el):
-    return el[0]
-
 class Page(models.Model):
     title = models.CharField(max_length=255);
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE)

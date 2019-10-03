@@ -1,630 +1,82 @@
 {% extends "base_sidebar.html" %}
+{% load static common_tags %}
 {% block inner_content %}
-{% load static %}
 <div class="section">
     <div class="offset">
         <select name="filter" class="select">
             <option>2015 / 2016</option>
             <option>2016 / 2017</option>
             <option>2017 / 2018</option>
-            <option selected>2018 / 2019</option>
+            <option selected="">2018 / 2019</option>
         </select>
     </div>
     <div class="offset">
-        <br/>
+        <br>
         <div class="tabs">
-            <a href="#" class="tab active">Optibet Virslīga</a>
-            <a href="#" class="tab">Optibet Virslīgas Playoff</a>
-            <a href="#" class="tab">1. Līga</a>
-            <a href="#" class="tab">1. Līgas Playoff</a>
-            <a href="#" class="tab">U-19 čempionāts</a>
+            {% for competition in competitions %}
+                {% if competition.internationalName and competition.competitionFifaId %}
+                    <a
+                        href="?competitionFifaId={{competition.competitionFifaId}}"
+                        class="tab">
+                        {{competition.internationalName}}
+                    </a>
+                {% endif %}
+            {% endfor %}
         </div>
-        <br/>
-        <br/>
+        <br>
+        <br>
     </div>
     <div class="offset">
         <div class="logo-list">
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-1.png' %}"/></a>
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-2.png' %}"/></a>
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-3.png' %}"/></a>
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-4.png' %}"/></a>
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-5.png' %}"/></a>
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-6.png' %}"/></a>
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-7.png' %}"/></a>
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-8.png' %}"/></a>
-            <a href="{% url 'team' %}"><img src="{% static '/images/team-logo-9.png' %}"/></a>
+            {% for m in matches_table %}
+                {% if m.team.picture.value %}
+                <a href="{% url 'team' m.id %}"><img src="data:image/png;base64, {{m.team.picture.value}}"></a>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>
-<div class="section" data-tab-wrap>
+<div class="section">
     <div class="offset">
         <div class="tabs">
-            <a href="#table" data-tab class="link active">Tabula</a>
-            <a href="#calendar" data-tab class="link">Kalendārs</a>
-            <a href="#statistic" data-tab class="link">Statistika</a>
+            <a href="#table" data-tab="" class="link active">Tabula</a>
+            <a href="#calendar" data-tab="" class="link">Kalendārs</a>
+            <a href="#statistic" data-tab="" class="link">Statistika</a>
         </div>
     </div>
     <div class="offset">
         <div class="tab-panel active" data-tab-panel="table">
             <table class="styled-table styled-table_big">
                 <tr>
-                    <th colspan="2">Optibet Virslīgas komandas</th>
-                    <th class="big">1</th>
-                    <th class="big">2</th>
-                    <th class="big">3</th>
-                    <th class="big">4</th>
-                    <th class="big">5</th>
-                    <th class="big">6</th>
-                    <th class="big">7</th>
-                    <th class="big">8</th>
-                    <th class="big">9</th>
+                    <th colspan="2" class="nowrap">Optibet Virslīgas komandas</th>
+                    {% for m in matches_table %}
+                    <th class="big">{{ forloop.counter }}</th>
+                    {% endfor %}
                     <th colspan="2">Punkti</th>
                     <th>Vārti</th>
                 </tr>
+                {% for m in matches_table %}
+                {% with place=forloop.counter %}
                 <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>1</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">FK Nikars</a></td>
-                    <td></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">2:1</div>
-                        <div>3:3</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">5:2</div>
-                        <div class="table-score_negative">2:5</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_negative">3:5</div>
-                        <div class="table-score_negative">2:3</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_negative">0:1</div>
-                        <div class="table-score_positive">9:7</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_negative">1:2</div>
-                        <div>4:4</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div class="table-score_negative">1:7</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div>1:1</div>
-                    </td>
-                    <td class="align-center"><b>34</b></td>
+                    <td class="big unbordered min-width"><b>{{place}}</b></td>
+                    <td class="big unbordered"><a href="{% url 'team' m.id %}">{{m.team.internationalShortName}}</a></td>
+                    {% for op in m.opponents %}
+                        {% if place is 1 and forloop.counter is 1%}<td></td>{% endif %}
+                        <td class="table-score">
+                            {% for m in op.matches %}
+                            <div class="{% if m.score.0 > m.score.1 %}table-score_positive{% elif m.score.0 < m.score.1 %}table-score_negative{% endif %}">
+                                {{m.score.0}}:{{m.score.1}}
+                            </div>
+                            {% endfor %}
+                        </td>
+                        {% if place is forloop.counter|add:1 %}<td></td>{% endif %}
+                    {% endfor %}
+                    <td class="align-center"><b>{{m.points}}</b></td>
                     <td class="align-center"><b>71%</b></td>
-                    <td class="align-center"><b>81:39</b></td>
+                    <td class="align-center"><b>{{m.total_score.0}}:{{m.total_score.1}}</b></td>
                 </tr>
-                <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>2</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">LDZ Cargo/DFA</a></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">8:1</div>
-                        <div class="table-score_negative">1:3</div>
-                    </td>
-                    <td></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">2:1</div>
-                        <div>3:3</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">5:2</div>
-                        <div class="table-score_negative">2:5</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_negative">3:5</div>
-                        <div class="table-score_negative">2:3</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_negative">0:1</div>
-                        <div class="table-score_positive">9:7</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_negative">1:2</div>
-                        <div>4:4</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div class="table-score_negative">1:7</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div>1:1</div>
-                    </td>
-                    <td class="align-center"><b>32</b></td>
-                    <td class="align-center"><b>67%</b></td>
-                    <td class="align-center"><b>68:51</b></td>
-                </tr>
-                <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>3</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">FC Petrow</a></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">8:1</div>
-                        <div class="table-score_negative">1:3</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_positive">3:1</div>
-                    </td>
-                    <td></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">5:2</div>
-                        <div class="table-score_negative">2:5</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_negative">3:5</div>
-                        <div class="table-score_negative">2:3</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">0:1</div>
-                        <div class="table-score_negative">9:7</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">1:2</div>
-                        <div>4:4</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div class="table-score_negative">1:7</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div>1:1</div>
-                    </td>
-                    <td class="align-center"><b>31</b></td>
-                    <td class="align-center"><b>65%</b></td>
-                    <td class="align-center"><b>70:53</b></td>
-                </tr>
-                <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>4</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">FK Beitar</a></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">8:1</div>
-                        <div class="table-score_negative">1:3</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_positive">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">5:2</div>
-                        <div class="table-score_negative">2:5</div>
-                    </td>
-                    <td></td>
-                    <td class="table-score">
-                        <div class="table-score_negative">3:5</div>
-                        <div class="table-score_negative">2:3</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">0:1</div>
-                        <div class="table-score_negative">9:7</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">1:2</div>
-                        <div>4:4</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div class="table-score_negative">1:7</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div>1:1</div>
-                    </td>
-                    <td class="align-center"><b>24</b></td>
-                    <td class="align-center"><b>50%</b></td>
-                    <td class="align-center"><b>65:49</b></td>
-                </tr>
-                <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>5</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">TFK Rēzekne/RFA</a></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div>1:1</div>
-                    </td>
-                    <td class="align-center"><b>24</b></td>
-                    <td class="align-center"><b>50%</b></td>
-                    <td class="align-center"><b>63:52</b></td>
-                </tr>
-                <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>6</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">FK Raba</a></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div>1:1</div>
-                    </td>
-                    <td class="align-center"><b>24</b></td>
-                    <td class="align-center"><b>50%</b></td>
-                    <td class="align-center"><b>77:64</b></td>
-                </tr>
-                <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>7</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">Jēkabpils Lūši</a></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div>1:1</div>
-                    </td>
-                    <td class="align-center"><b>22</b></td>
-                    <td class="align-center"><b>46%</b></td>
-                    <td class="align-center"><b>63:63</b></td>
-                </tr>
-                <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>8</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">New Project</a></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td></td>
-                    <td class="table-score">
-                        <div>0:0</div>
-                        <div>1:1</div>
-                    </td>
-                    <td class="align-center"><b>10</b></td>
-                    <td class="align-center"><b>21%</b></td>
-                    <td class="align-center"><b>67:83</b></td>
-                </tr>
-                <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>9</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' %}">SK Monarhs</a></td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td class="table-score">
-                        <div class="table-score_positive">6:3</div>
-                        <div class="table-score_negative">3:1</div>
-                    </td>
-                    <td></td>
-                    <td class="align-center"><b>4</b></td>
-                    <td class="align-center"><b>8%</b></td>
-                    <td class="align-center"><b>29:129</b></td>
-                </tr>
-            </table>
-        </div>
-        <div class="tab-panel" data-tab-panel="calendar">
-            <div class="calendar">
-                <div class="calendar-item">
-                    <div class="calendar-cell calendar-time-cell">
-                        <div class="calendar-time">
-                            <div>06 Mar</div>
-                            <hr/>
-                            <div>20:00</div>
-                        </div>
-                    </div>
-                    <div class="calendar-cell">
-                        <div class="link">
-                            Optibet Virslīga
-                        </div>
-                        <h3>
-                            Daugavpils Olimpiskais centrs
-                        </h3>
-                        <h2>
-                            LDZ Cargo <span>0:0</span> Jēkabpils Lūši
-                        </h2>
-                    </div>
-                    <div class="calendar-cell min-width">
-                        <img src="{% static '/images/sportacentrs.png' %}"/>
-                    </div>
-                </div>
-                <div class="calendar-item">
-                    <div class="calendar-cell calendar-time-cell">
-                        <div class="calendar-time">
-                            <div>18 Apr</div>
-                            <hr/>
-                            <div>19:00</div>
-                        </div>
-                    </div>
-                    <div class="calendar-cell">
-                        <div class="link">
-                            Latvijas kauss
-                        </div>
-                        <h3>
-                            Daugavpils Olimpiskais centrs
-                        </h3>
-                        <h2>
-                            LDZ Cargo <span>8:3</span> Petrow
-                        </h2>
-                    </div>
-                    <div class="calendar-cell min-width">
-                        <img src="{% static '/images/sportacentrs.png' %}"/>
-                    </div>
-                </div>
-                <div class="calendar-item">
-                    <div class="calendar-cell calendar-time-cell">
-                        <div class="calendar-time">
-                            <div>3 Mar</div>
-                            <hr/>
-                            <div>18:45</div>
-                        </div>
-                    </div>
-                    <div class="calendar-cell">
-                        <div class="link">
-                            U-19 čempionāts
-                        </div>
-                        <h3>
-                            Daugavpils Olimpiskais centrs
-                        </h3>
-                        <h2>
-                            Nikars <span>0:0</span> Beitar
-                        </h2>
-                    </div>
-                    <div class="calendar-cell min-width">
-                        <img src="{% static '/images/sportacentrs.png' %}"/>
-                    </div>
-                </div>
-                <div class="calendar-item">
-                    <div class="calendar-cell calendar-time-cell">
-                        <div class="calendar-time">
-                            <div>06 Mar</div>
-                            <hr/>
-                            <div>20:00</div>
-                        </div>
-                    </div>
-                    <div class="calendar-cell">
-                        <div class="link">
-                            Optibet Virslīga
-                        </div>
-                        <h3>
-                            Daugavpils Olimpiskais centrs
-                        </h3>
-                        <h2>
-                            LDZ Cargo <span>0:0</span> Jēkabpils Lūši
-                        </h2>
-                    </div>
-                    <div class="calendar-cell min-width">
-                        <img src="{% static '/images/sportacentrs.png' %}"/>
-                    </div>
-                </div>
-                <div class="calendar-item">
-                    <div class="calendar-cell calendar-time-cell">
-                        <div class="calendar-time">
-                            <div>18 Apr</div>
-                            <hr/>
-                            <div>19:00</div>
-                        </div>
-                    </div>
-                    <div class="calendar-cell">
-                        <div class="link">
-                            Latvijas kauss
-                        </div>
-                        <h3>
-                            Daugavpils Olimpiskais centrs
-                        </h3>
-                        <h2>
-                            LDZ Cargo <span>8:3</span> Petrow
-                        </h2>
-                    </div>
-                    <div class="calendar-cell min-width">
-                        <img src="{% static '/images/sportacentrs.png' %}"/>
-                    </div>
-                </div>
-                <div class="calendar-item">
-                    <div class="calendar-cell calendar-time-cell">
-                        <div class="calendar-time">
-                            <div>3 Mar</div>
-                            <hr/>
-                            <div>18:45</div>
-                        </div>
-                    </div>
-                    <div class="calendar-cell">
-                        <div class="link">
-                            U-19 čempionāts
-                        </div>
-                        <h3>
-                            Daugavpils Olimpiskais centrs
-                        </h3>
-                        <h2>
-                            Nikars <span>0:0</span> Beitar
-                        </h2>
-                    </div>
-                    <div class="calendar-cell min-width">
-                        <img src="{% static '/images/sportacentrs.png' %}"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-panel" data-tab-panel="statistic">
-            <table class="styled-table styled-table_big">
-                <tr>
-                    <th colspan="3">Optibet Virslīgas spēlētāji</th>
-                    <th>Vārti</th>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>1</b></td>
-                    <td class="unbordered nowrap">Maksims Seņs</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">FK Nikars</a></td>
-                    <td class="align-center big"><b>89</b></td>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>2</b></td>
-                    <td class="unbordered nowrap">Matīss Babris</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">FC Petrow</a></td>
-                    <td class="align-center big"><b>27</b></td>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>3</b></td>
-                    <td class="unbordered nowrap">Germans Matjušenko</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">FK Nikar</a></td>
-                    <td class="align-center big"><b>22</b></td>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>4</b></td>
-                    <td class="unbordered nowrap">Artūrs Strazdiņš</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">FK Raba</a></td>
-                    <td class="align-center big"><b>21</b></td>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>5</b></td>
-                    <td class="unbordered nowrap">Dzmitry Kuzmin</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">FK Beitar</a></td>
-                    <td class="align-center big"><b>14</b></td>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>6</b></td>
-                    <td class="unbordered nowrap">Miks Babris</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">FC Petrow</a></td>
-                    <td class="align-center big"><b>11</b></td>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>7</b></td>
-                    <td class="unbordered nowrap">Vitālijs Aguls</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">TFK Rēzekne/RFA</a></td>
-                    <td class="align-center big"><b>11</b></td>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>8</b></td>
-                    <td class="unbordered nowrap">Konstantīns Zabarovskis</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">FK Nikars</a></td>
-                    <td class="align-center big"><b>5</b></td>
-                </tr>
-                <tr class="styled-table_separated white">
-                    <td class="unbordered-r big"><b>9</b></td>
-                    <td class="unbordered nowrap">Aleksandrs Macuks</td>
-                    <td class="unbordered full-width"><a href="{% url 'team' %}">LDZ Cargo/DFA</a></td>
-                    <td class="align-center big"><b>1</b></td>
-                </tr>
+                {% endwith %}
+                {% endfor %}
             </table>
         </div>
     </div>

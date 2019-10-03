@@ -1,7 +1,7 @@
 {% extends "base_sidebar.html" %}
 {% block inner_content %}
 {% load static %}
-{% include "core/title.html" with title='FK nikars' %}
+{% include "core/title.html" with title=team.organisationName %}
 <div class="section">
     <div class="offset">
         <h6 class="uppercase">Par komandu</h6>
@@ -12,9 +12,11 @@
                 <div class="board">
                     <div class="board-content">
                         <div class="row team-layout_head">
+                            {% if team.picture.value %}
                             <div class="gr-3 team-layout_logo">
-                                <img src="{% static '/images/team-2.png' %}">
+                                <img src="data:image/png;base64, {{team.picture.value}}">
                             </div>
+                            {% endif %}
                             <div class="gr-9 team-layout_links">
                                 <a href="https://fknikars.lv" target="_blank">www.fknikars.lv</a><br>
                                 Talr.: <a href="tel:29164073">29164073</a><br>
