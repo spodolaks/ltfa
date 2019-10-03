@@ -117,6 +117,7 @@ class MatchesTable:
             self.__append_match(home_team_ID, away_team_ID, [phase.homeScore, phase.awayScore])
         self.__points_percents();
         self.__sort_table();
+        self.__append_teams();
 
     def __init_team(self, id = 0):
         if id not in self.__table:
@@ -179,6 +180,9 @@ class MatchesTable:
         return self.table
 
     def __points_percents(self):
+        print(self.__table)
+        pass
+    def __append_teams(self):
         pass
 
 class Teams:

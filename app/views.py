@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.forms.models import model_to_dict
@@ -35,3 +35,10 @@ def tournaments(request, page):
 def news(request, slug=''):
     p = get_object_or_404(News, slug=slug);
     return render(request, "app/default.html", model_to_dict(p));
+
+def team(request, id=''):
+    api = Api()
+    team = api.get_team(id);
+    if team.teamFifaId == "":
+        return HttpResponseNotFound()
+    return render(request, "app/team.html", {'team': team});

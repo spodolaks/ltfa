@@ -52,7 +52,7 @@
         <div class="tab-panel active" data-tab-panel="table">
             <table class="styled-table styled-table_big">
                 <tr>
-                    <th colspan="2">Optibet Virslīgas komandas</th>
+                    <th colspan="2" class="nowrap">Optibet Virslīgas komandas</th>
                     {% for m in matches_table %}
                     <th class="big">{{ forloop.counter }}</th>
                     {% endfor %}
@@ -62,8 +62,8 @@
                 {% for m in matches_table %}
                 {% with place=forloop.counter %}
                 <tr class="styled-table_separated">
-                    <td class="big unbordered"><b>{{place}}</b></td>
-                    <td class="big unbordered"><a href="#">{{m.id}}</a></td>
+                    <td class="big unbordered min-width"><b>{{place}}</b></td>
+                    <td class="big unbordered"><a href="{% url 'team' m.id %}">{{m.id}}</a></td>
                     {% for op in m.opponents %}
                         {% if place is 1 and forloop.counter is 1%}<td></td>{% endif %}
                         <td class="table-score">
