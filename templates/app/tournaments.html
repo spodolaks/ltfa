@@ -28,15 +28,11 @@
     </div>
     <div class="offset">
         <div class="logo-list">
-            <a href="#"><img src="{% static 'images/team-logo-1.png' %}"></a>
-            <a href="#"><img src="{% static 'images/team-logo-2.png' %}"></a>
-            <a href="#"><img src="{% static 'images/team-logo-3.png' %}"></a>
-            <a href="#"><img src="{% static 'images/team-logo-4.png' %}"></a>
-            <a href="#"><img src="{% static 'images/team-logo-5.png' %}"></a>
-            <a href="#"><img src="{% static 'images/team-logo-6.png' %}"></a>
-            <a href="#"><img src="{% static 'images/team-logo-7.png' %}"></a>
-            <a href="#"><img src="{% static 'images/team-logo-8.png' %}"></a>
-            <a href="#"><img src="{% static 'images/team-logo-9.png' %}"></a>
+            {% for m in matches_table %}
+                {% if m.team.picture.value %}
+                <a href="{% url 'team' m.id %}"><img src="data:image/png;base64, {{m.team.picture.value}}"></a>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>

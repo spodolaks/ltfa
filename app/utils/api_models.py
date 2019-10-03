@@ -211,3 +211,12 @@ class Team:
         self.organisationShortName = props['organisationShortName'] if 'organisationShortName' in props else ""
         self.status = props['status'] if 'status' in props else ""
         self.teamFifaId = props['teamFifaId'] if 'teamFifaId' in props else ""
+        self.picture = props['picture'] if 'picture' in props else {}
+
+class Picture:
+    def __init__(self, props):
+        self.entityId = props['entityId'] if 'entityId' in props else ""
+        self.entityType = props['entityType'] if 'entityType' in props else ""
+        self.contentType = props['contentType'] if 'contentType' in props else ""
+        self.pictureLink = props['pictureLink'] if 'pictureLink' in props else ""
+        self.value = props['value'] if 'value' in props else ""

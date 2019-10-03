@@ -12,9 +12,11 @@
                 <div class="board">
                     <div class="board-content">
                         <div class="row team-layout_head">
+                            {% if team.picture.value %}
                             <div class="gr-3 team-layout_logo">
-                                <img src="{% static '/images/team-2.png' %}">
+                                <img src="data:image/png;base64, {{team.picture.value}}">
                             </div>
+                            {% endif %}
                             <div class="gr-9 team-layout_links">
                                 <a href="https://fknikars.lv" target="_blank">www.fknikars.lv</a><br>
                                 Talr.: <a href="tel:29164073">29164073</a><br>
