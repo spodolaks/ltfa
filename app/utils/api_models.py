@@ -107,17 +107,11 @@ class MatchTeam:
 
 class MatchesTable:
     table = [];
-    def __init__(self, props):
-        matches = Matches(props);
-        self.__table = {};
-        for match in matches.list:
-            home_team_ID = match.matchTeams.getHomeID()
-            away_team_ID = match.matchTeams.getAwayID()
-            phase = match.matchPhases.getSecondPhase()
-            self.__append_match(home_team_ID, away_team_ID, [phase.homeScore, phase.awayScore])
+    def __init__(self, matches, teams):
+        self.__append_matches(matches);
         self.__points_percents();
         self.__sort_table();
-        self.__append_teams();
+        self.__append_teams(teams);
 
     def __init_team(self, id = 0):
         if id not in self.__table:
@@ -136,6 +130,16 @@ class MatchesTable:
                 "id": id,
                 "matches": []
             }
+        return self.__table;
+
+    def __append_matches(self, matches):
+        matches = Matches(matches);
+        self.__table = {};
+        for match in matches.list:
+            home_team_ID = match.matchTeams.getHomeID()
+            away_team_ID = match.matchTeams.getAwayID()
+            phase = match.matchPhases.getSecondPhase()
+            self.__append_match(home_team_ID, away_team_ID, [phase.homeScore, phase.awayScore])
         return self.__table;
 
     def __append_match(self, id = 0, opponent_id = 0, score= [0,0]):
@@ -180,10 +184,11 @@ class MatchesTable:
         return self.table
 
     def __points_percents(self):
-        print(self.__table)
         pass
-    def __append_teams(self):
-        pass
+    def __append_teams(self, teams):
+        for t in self.table:
+            t['team'] = teams.list[t['id']].__dict__;
+        return self.table;
 
 class Teams:
     list = {}

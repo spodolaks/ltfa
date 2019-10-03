@@ -27,8 +27,7 @@ def tournaments(request, page):
     teams = api.get_teams(current_competition_ID);
     data.update({
         "competitions": competitions,
-        "matches_table": matches_table.table,
-        "teams": teams.list
+        "matches_table": matches_table.table
     })
     return render(request, page.layout, data);
 

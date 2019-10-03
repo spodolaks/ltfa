@@ -20,7 +20,10 @@ class Api:
         return Matches(self.request("/matches", {'competitionfifaid': competitionfifaid}));
 
     def get_matches_table(self, competitionfifaid):
-        return MatchesTable(self.request("/matches", {'competitionfifaid': competitionfifaid}))
+        return MatchesTable(
+            self.request("/matches", {'competitionfifaid': competitionfifaid}),
+            self.get_teams(competitionfifaid)
+        )
 
     def get_matchevents(self, matchfifaid):
         return self.request("/matchevents", {'matchfifaid': matchfifaid});

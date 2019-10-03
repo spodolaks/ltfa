@@ -63,7 +63,7 @@
                 {% with place=forloop.counter %}
                 <tr class="styled-table_separated">
                     <td class="big unbordered min-width"><b>{{place}}</b></td>
-                    <td class="big unbordered"><a href="{% url 'team' m.id %}">{{m.id}}</a></td>
+                    <td class="big unbordered"><a href="{% url 'team' m.id %}">{{m.team.internationalShortName}}</a></td>
                     {% for op in m.opponents %}
                         {% if place is 1 and forloop.counter is 1%}<td></td>{% endif %}
                         <td class="table-score">
