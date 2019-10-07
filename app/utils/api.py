@@ -21,7 +21,7 @@ class Api:
 
     def get_matches_table(self, competitionfifaid):
         return MatchesTable(
-            self.request("/matches", {'competitionfifaid': competitionfifaid}),
+            self.get_matches(competitionfifaid),
             self.get_teams(competitionfifaid)
         )
 

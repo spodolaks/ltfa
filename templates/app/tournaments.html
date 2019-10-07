@@ -19,7 +19,7 @@
                     <a
                         href="?season={{current_season}}&competitionFifaId={{competition.competitionFifaId}}"
                         class="tab{% if current_competition_ID == competition.competitionFifaId %} active{% endif %}">
-                        {{competition.internationalName}}
+                        {{competition.internationalShortName}}
                     </a>
                 {% endif %}
             {% endfor %}
@@ -37,7 +37,7 @@
         </div>
     </div>
 </div>
-<div class="section">
+<div class="section" data-tab-wrap>
     <div class="offset">
         <div class="tabs">
             <a href="#table" data-tab="" class="link active">Tabula</a>
@@ -49,7 +49,7 @@
         <div class="tab-panel active" data-tab-panel="table">
             <table class="styled-table styled-table_big">
                 <tr>
-                    <th colspan="2" class="nowrap">Optibet Virslīgas komandas</th>
+                    <th colspan="2" class="nowrap">{{current_competition.internationalShortName}} komandas</th>
                     {% for m in matches_table %}
                     <th class="big">{{ forloop.counter }}</th>
                     {% endfor %}
@@ -83,6 +83,38 @@
                 {% endwith %}
                 {% endfor %}
             </table>
+        </div>
+        <div class="tab-panel" data-tab-panel="calendar">
+            <div class="calendar">
+                {% for c in calendar %}
+                <div class="calendar-item">
+                    <div class="calendar-cell calendar-time-cell">
+                        <div class="calendar-time">
+                            <div>{{c.match.date|date:"d M"}}</div>
+                            <hr>
+                            <div>{{c.match.date|date:"H:i"}}</div>
+                        </div>
+                    </div>
+                    <div class="calendar-cell">
+                        <div class="link">
+                            {{current_competition.internationalShortName}}
+                        </div>
+                        <h3>
+                            {{c.match.facilityFifaId}}
+                        </h3>
+                        <h2>
+                            <a href="{% url 'team' c.teams.0.teamFifaId %}">{{c.teams.0.internationalShortName}}</a>
+                            {% if c.match.status == "PLAYED" %}
+                            <span>{{c.match.getScore.0}}:{{c.match.getScore.1}}</span>
+                            {% else %}
+                            <span>-:-</span>
+                            {% endif %}
+                            <a href="{% url 'team' c.teams.1.teamFifaId %}">{{c.teams.1.internationalShortName}}</a>
+                        </h2>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

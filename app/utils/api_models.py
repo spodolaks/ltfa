@@ -1,3 +1,5 @@
+import datetime
+
 class Competitions:
     list = []
     def __init__(self, props):
@@ -33,6 +35,12 @@ class Competition:
         self.superiorCompetitionFifaId = props['superiorCompetitionFifaId'] if 'superiorCompetitionFifaId' in props else None
         self.teamCharacter = props['teamCharacter'] if 'teamCharacter' in props else ''
 
+class Calendar:
+    def __init__(self, matches, teams):
+        print(teams)
+        self.list = [{ 'match':l,'teams':[teams.list[l.matchTeams.getHomeID()], teams.list[l.matchTeams.getAwayID()]]} for l in matches.list];
+
+
 class Matches:
     list = []
     def __init__(self, props):
@@ -54,6 +62,11 @@ class Match:
         self.resultSupplement = props['resultSupplement'] if 'resultSupplement' in props else ''
         self.resultSupplementHome = props['resultSupplementHome'] if 'resultSupplementHome' in props else None
         self.status =  props['status'] if 'status' in props else ''
+        self.date = datetime.datetime.strptime(self.dateTimeLocal, '%Y-%m-%d %H:%M:%S')
+
+    def getScore(self):
+        phase = self.matchPhases.getSecondPhase()
+        return [phase.homeScore, phase.awayScore];
 
 class MatchPhases:
     list = []
@@ -140,7 +153,6 @@ class MatchesTable:
         return self.__table;
 
     def __append_matches(self, matches):
-        matches = Matches(matches);
         self.__table = {};
         for match in matches.list:
             home_team_ID = match.matchTeams.getHomeID()
@@ -150,7 +162,6 @@ class MatchesTable:
         return self.__table;
 
     def __append_match(self, id = 0, opponent_id = 0, score= [0,0], played=True):
-        print(played);
         away_score = [score[1], score[0]]
         if played:
             home_points = self.__points(score[0], score[1])
