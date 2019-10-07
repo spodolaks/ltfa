@@ -65,15 +65,19 @@
                         {% if place is 1 and forloop.counter is 1%}<td></td>{% endif %}
                         <td class="table-score">
                             {% for m in op.matches %}
-                            <div class="{% if m.score.0 > m.score.1 %}table-score_positive{% elif m.score.0 < m.score.1 %}table-score_negative{% endif %}">
-                                {{m.score.0}}:{{m.score.1}}
-                            </div>
+                                {% if m.played %}
+                                    <div class="{% if m.score.0 > m.score.1 %}table-score_positive{% elif m.score.0 < m.score.1 %}table-score_negative{% endif %}">
+                                        {{m.score.0}}:{{m.score.1}}
+                                    </div>
+                                {% else %}
+                                    <div>-:-</div>
+                                {% endif %}
                             {% endfor %}
                         </td>
                         {% if place is forloop.counter|add:1 %}<td></td>{% endif %}
                     {% endfor %}
-                    <td class="align-center"><b>{{m.points}}</b></td>
-                    <td class="align-center"><b>71%</b></td>
+                    <td class="align-center"><b>{{m.points}} {{m.posible_points}}</b></td>
+                    <td class="align-center"><b>{{m.percents}}%</b></td>
                     <td class="align-center"><b>{{m.total_score.0}}:{{m.total_score.1}}</b></td>
                 </tr>
                 {% endwith %}

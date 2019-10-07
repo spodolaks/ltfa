@@ -115,7 +115,6 @@ class MatchesTable:
     table = [];
     def __init__(self, matches, teams):
         self.__append_matches(matches);
-        self.__points_percents();
         self.__sort_table();
         self.__append_teams(teams);
 
@@ -124,6 +123,8 @@ class MatchesTable:
             self.__table[id] = {
                 "id": id,
                 "points": 0,
+                "posible_points": 0,
+                "percents": 0,
                 "total_score": [0,0],
                 "opponents": {}
             }
@@ -145,27 +146,38 @@ class MatchesTable:
             home_team_ID = match.matchTeams.getHomeID()
             away_team_ID = match.matchTeams.getAwayID()
             phase = match.matchPhases.getSecondPhase()
-            self.__append_match(home_team_ID, away_team_ID, [phase.homeScore, phase.awayScore])
+            self.__append_match(home_team_ID, away_team_ID, [phase.homeScore, phase.awayScore], match.status=="PLAYED")
         return self.__table;
 
-    def __append_match(self, id = 0, opponent_id = 0, score= [0,0]):
+    def __append_match(self, id = 0, opponent_id = 0, score= [0,0], played=True):
+        print(played);
         away_score = [score[1], score[0]]
-        home_points = self.__points(score[0], score[1])
-        away_points = self.__points(score[1], score[0])
+        if played:
+            home_points = self.__points(score[0], score[1])
+            away_points = self.__points(score[1], score[0])
+        else:
+            home_points = 0
+            away_points = 0
         self.__init_opponent(opponent_id, id);
         self.__init_opponent(id, opponent_id);
         self.__table[id]["opponents"][opponent_id]["matches"].append({
             "score": score,
-            "points": home_points
+            "points": home_points,
+            "played": played
         });
         self.__table[opponent_id]["opponents"][id]["matches"].append({
             "score": away_score,
-            "points": away_points
+            "points": away_points,
+            "played": played
         });
         self.__table[id]["points"] += home_points;
+        self.__table[id]["posible_points"] += 3 if played == True else 0;
+        self.__table[id]["percents"] = int((self.__table[id]["points"] / self.__table[id]["posible_points"]) * 100);
         self.__table[id]["total_score"][0] += score[0];
         self.__table[id]["total_score"][1] += score[1];
         self.__table[opponent_id]["points"] += away_points;
+        self.__table[opponent_id]["posible_points"] += 3 if played == True else 0;
+        self.__table[opponent_id]["percents"] = int((self.__table[opponent_id]["points"] / self.__table[opponent_id]["posible_points"]) * 100);
         self.__table[opponent_id]["total_score"][0] += away_score[0];
         self.__table[opponent_id]["total_score"][1] += away_score[1];
         return self.__table
@@ -189,8 +201,6 @@ class MatchesTable:
             t["opponents"] = opponents;
         return self.table
 
-    def __points_percents(self):
-        pass
     def __append_teams(self, teams):
         for t in self.table:
             t['team'] = teams.list[t['id']].__dict__;
