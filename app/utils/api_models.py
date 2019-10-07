@@ -5,6 +5,12 @@ class Competitions:
         if type(props) == list:
             for pr in props:
                 self.list.append(Competition(pr))
+    def getById(self, id):
+        if id:
+            for l in self.list:
+                if id == l.competitionFifaId:
+                    return l;
+        return self.list[0] if len(self.list) > 0 else {};
 
 class Competition:
     def __init__(self, props = {}):
@@ -220,3 +226,16 @@ class Picture:
         self.contentType = props['contentType'] if 'contentType' in props else ""
         self.pictureLink = props['pictureLink'] if 'pictureLink' in props else ""
         self.value = props['value'] if 'value' in props else ""
+
+class Seasons:
+    list = {};
+    def __init__(self, props):
+        self.list = {}
+        if type(props) == list:
+            for pr in props:
+                self.list[pr] = Season(pr);
+
+class Season:
+    def __init__(self, year):
+        self.year = int(year);
+        self.name = str(self.year - 1) + " / " + str(self.year)

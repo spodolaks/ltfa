@@ -3,12 +3,13 @@
 {% block inner_content %}
 <div class="section">
     <div class="offset">
-        <select name="filter" class="select">
-            <option>2015 / 2016</option>
-            <option>2016 / 2017</option>
-            <option>2017 / 2018</option>
-            <option selected="">2018 / 2019</option>
-        </select>
+        <form action="">
+            <select name="season" class="select" onchange="this.form.submit()">
+                {% for key, value in seasons.items %}
+                    <option value="{{key}}" {% if current_season == key %}selected=""{% endif %}>{{value.name}}</option>
+                {% endfor %}
+            </select>
+        </form>
     </div>
     <div class="offset">
         <br>
@@ -16,8 +17,8 @@
             {% for competition in competitions %}
                 {% if competition.internationalName and competition.competitionFifaId %}
                     <a
-                        href="?competitionFifaId={{competition.competitionFifaId}}"
-                        class="tab">
+                        href="?season={{current_season}}&competitionFifaId={{competition.competitionFifaId}}"
+                        class="tab{% if current_competition_ID == competition.competitionFifaId %} active{% endif %}">
                         {{competition.internationalName}}
                     </a>
                 {% endif %}
