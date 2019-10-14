@@ -39,6 +39,7 @@ class Calendar:
     def __init__(self, matches, teams):
         print(teams)
         self.list = [{ 'match':l,'teams':[teams.list[l.matchTeams.getHomeID()], teams.list[l.matchTeams.getAwayID()]]} for l in matches.list];
+        self.list.sort(key=lambda x:x['match'].date)
 
 
 class Matches:
