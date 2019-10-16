@@ -37,7 +37,6 @@ class Competition:
 
 class Calendar:
     def __init__(self, matches, teams):
-        print(teams)
         self.list = [{ 'match':l,'teams':[teams.list[l.matchTeams.getHomeID()], teams.list[l.matchTeams.getAwayID()]]} for l in matches.list];
         self.list.sort(key=lambda x:x['match'].date)
 
@@ -48,7 +47,8 @@ class Matches:
         self.list = []
         if type(props) == list:
             for pr in props:
-                self.list.append(Match(pr))
+                if 'matchTeams' in pr:
+                    self.list.append(Match(pr))
 
 class Match:
     def __init__(self, props = {}):
@@ -58,16 +58,19 @@ class Match:
         self.matchDay =  props['matchDay'] if 'matchDay' in props else None
         self.matchFifaId =  props['matchFifaId'] if 'matchFifaId' in props else ''
         self.matchOrderNumber =  props['matchOrderNumber'] if 'matchOrderNumber' in props else None
-        self.matchPhases = MatchPhases(props['matchPhases']);
-        self.matchTeams = MatchTeams(props['matchTeams'])
+        self.matchPhases = MatchPhases(props['matchPhases'] if 'matchPhases' in props else []);
+        self.matchTeams = MatchTeams(props['matchTeams'] if 'matchTeams' in props else [])
         self.resultSupplement = props['resultSupplement'] if 'resultSupplement' in props else ''
         self.resultSupplementHome = props['resultSupplementHome'] if 'resultSupplementHome' in props else None
         self.status =  props['status'] if 'status' in props else ''
-        self.date = datetime.datetime.strptime(self.dateTimeLocal, '%Y-%m-%d %H:%M:%S')
+        self.date = datetime.datetime.strptime(self.dateTimeLocal, '%Y-%m-%d %H:%M:%S') if self.dateTimeLocal != '' else ''
 
     def getScore(self):
-        phase = self.matchPhases.getSecondPhase()
-        return [phase.homeScore, phase.awayScore];
+        phase = self.matchPhases.getSecondPhase();
+        if phase is not None:
+            return [phase.homeScore, phase.awayScore];
+        else:
+            return [0, 0]
 
 class MatchPhases:
     list = []
@@ -158,8 +161,8 @@ class MatchesTable:
         for match in matches.list:
             home_team_ID = match.matchTeams.getHomeID()
             away_team_ID = match.matchTeams.getAwayID()
-            phase = match.matchPhases.getSecondPhase()
-            self.__append_match(home_team_ID, away_team_ID, [phase.homeScore, phase.awayScore], match.status=="PLAYED")
+            score = match.getScore()
+            self.__append_match(home_team_ID, away_team_ID, score, match.status=="PLAYED")
         return self.__table;
 
     def __append_match(self, id = 0, opponent_id = 0, score= [0,0], played=True):
@@ -184,12 +187,16 @@ class MatchesTable:
         });
         self.__table[id]["points"] += home_points;
         self.__table[id]["posible_points"] += 3 if played == True else 0;
-        self.__table[id]["percents"] = int((self.__table[id]["points"] / self.__table[id]["posible_points"]) * 100);
+        self.__table[id]["percents"] = 0;
+        if self.__table[id]["posible_points"] > 0:
+            self.__table[id]["percents"] = int((self.__table[id]["points"] / self.__table[id]["posible_points"]) * 100);
         self.__table[id]["total_score"][0] += score[0];
         self.__table[id]["total_score"][1] += score[1];
         self.__table[opponent_id]["points"] += away_points;
         self.__table[opponent_id]["posible_points"] += 3 if played == True else 0;
-        self.__table[opponent_id]["percents"] = int((self.__table[opponent_id]["points"] / self.__table[opponent_id]["posible_points"]) * 100);
+        self.__table[opponent_id]["percents"] = 0;
+        if self.__table[opponent_id]["posible_points"] > 0:
+            self.__table[opponent_id]["percents"] = int((self.__table[opponent_id]["points"] / self.__table[opponent_id]["posible_points"]) * 100);
         self.__table[opponent_id]["total_score"][0] += away_score[0];
         self.__table[opponent_id]["total_score"][1] += away_score[1];
         return self.__table
