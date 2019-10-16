@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.forms.models import model_to_dict
 from .models import Page, News
 from .utils.api import Api
-from .utils.api_models import MatchesTable, Calendar
+from .utils.api_models import MatchesTable, Calendar, Facilities
 
 def pages(request, url=''):
     if url == '':
@@ -33,7 +33,10 @@ def tournaments(request, page):
     matches = api.get_matches(current_competition_ID);
     teams = api.get_teams(current_competition_ID);
     matches_table = MatchesTable(matches, teams)
-    calendar = Calendar(matches, teams)
+    facilities = Facilities()
+    for m in matches.list:
+        facilities.add(api.get_facility(m.facilityFifaId))
+    calendar = Calendar(matches, teams, facilities)
 
     data.update({
         "current_season": current_season,

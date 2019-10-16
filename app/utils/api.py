@@ -47,3 +47,6 @@ class Api:
 
     def get_seasons(self):
         return Seasons(self.request("/seasons"));
+
+    def get_facility(self, facilityfifaid):
+        return self.request("/facility", {'facilityfifaid': facilityfifaid});

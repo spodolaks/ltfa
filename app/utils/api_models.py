@@ -35,11 +35,45 @@ class Competition:
         self.superiorCompetitionFifaId = props['superiorCompetitionFifaId'] if 'superiorCompetitionFifaId' in props else None
         self.teamCharacter = props['teamCharacter'] if 'teamCharacter' in props else ''
 
-class Calendar:
-    def __init__(self, matches, teams):
-        self.list = [{ 'match':l,'teams':[teams.list[l.matchTeams.getHomeID()], teams.list[l.matchTeams.getAwayID()]]} for l in matches.list];
-        self.list.sort(key=lambda x:x['match'].date)
 
+class Facilities:
+    def __init__(self, props = []):
+        self.list = []
+        if type(props) == list:
+            for pr in props:
+                self.list.append(Facility(pr))
+    def add(self, props):
+        self.list.append(Facility(props))
+
+    def get(self, id):
+        for l in self.list:
+            if int(id) == int(l.facilityFifaId):
+                return l;
+        return None
+
+class Facility:
+    def __init__(self, props):
+        self.address =  props['address'] if 'address' in props else ''
+        self.facilityFifaId =  props['facilityFifaId'] if 'facilityFifaId' in props else None
+        self.internationalName =  props['internationalName'] if 'internationalName' in props else ''
+        self.internationalShortName =  props['internationalShortName'] if 'internationalShortName' in props else ''
+        self.organisationFifaId =  props['organisationFifaId'] if 'organisationFifaId' in props else None
+        self.status =  props['status'] if 'status' in props else ''
+        self.town =  props['town'] if 'town' in props else ''
+
+class Calendar:
+    def __init__(self, matches, teams, facilities):
+        self.list = []
+        for l in matches.list:
+            self.list.append({
+                'match':l,
+                'teams':[
+                    teams.list[l.matchTeams.getHomeID()],
+                    teams.list[l.matchTeams.getAwayID()]
+                ],
+                'facility': facilities.get(l.facilityFifaId)
+            })
+        self.list.sort(key=lambda x:x['match'].date)
 
 class Matches:
     list = []
