@@ -50,7 +50,7 @@ def tournaments(request, page):
     })
     return render(request, page.layout, data);
 
-def news(request, slug=''):
+def news_item(request, slug=''):
     p = get_object_or_404(News, slug=slug);
     return render(request, "app/default.html", model_to_dict(p));
 
