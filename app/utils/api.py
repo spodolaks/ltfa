@@ -1,7 +1,7 @@
 from django.conf import settings
 import requests
 import datetime
-from .api_models import Competitions, Matches, MatchesTable, Teams, Team, Picture, Seasons
+from .api_models import Competitions, Competition, Match, Matches, MatchesTable, Teams, Team, Picture, Seasons
 
 class Api:
     def __init__(self, url = settings.API_URL):
@@ -15,6 +15,12 @@ class Api:
 
     def get_competitions(self, season=(datetime.datetime.now().year + 1)):
         return Competitions(self.request("/competitions", {'season': season}));
+
+    def get_competition(self, competitionfifaid):
+        return Competition(self.request("/competition", {'competitionfifaid': competitionfifaid}));
+
+    def get_nextmatch(self):
+        return Match(self.request("/nextmatch"));
 
     def get_matches(self, competitionfifaid):
         return Matches(self.request("/matches", {'competitionfifaid': competitionfifaid}));

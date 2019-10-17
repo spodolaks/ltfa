@@ -1,0 +1,28 @@
+{% load static api_tags page_tags %}
+{% nextmatch as nm %}
+
+<div class="board align-center">
+    <div class="board-content">
+        <h2 class="title uppercase">Tuvākā spēle</h2>
+        <div class="wysiwyg">
+            <b>{{nm.match.date|date:"d M D H:i"}}</b><br><br>
+            {{nm.competition.internationalName}},<br>
+            {{nm.facility.internationalShortName}},<br>
+            {{nm.facility.address}}
+        </div>
+    </div>
+    <div class="versus">
+        <div class="versus-side">
+            <img src="data:image/png;base64, {{nm.teams.0.picture.value}}">
+            <div>{{nm.teams.0.internationalShortName}}</div>
+        </div>
+        <div class="versus-side">
+            <img src="data:image/png;base64, {{nm.teams.1.picture.value}}">
+            <div>{{nm.teams.1.internationalShortName}}</div>
+        </div>
+    </div>
+    {% page_by_layout "events" as events_page %}
+    {% if events_page %}
+        <a href="{% url 'page' events_page.slug %}" class="button button-block">Visas spēles</a>
+    {% endif %}
+</div>

@@ -21,29 +21,7 @@
             </div>
             <div class="row offset">
                 <div class="gr-12 offset">
-                    <div class="board align-center">
-                        <div class="board-content">
-                            <h2 class="title uppercase">Tuvākā spēle</h2>
-
-                            <div class="wysiwyg">
-                                <b>20 Sep Fri 19:30</b><br><br>
-                                Optibet Virslīga<br>
-                                Elektrum Olimpiskais centrs,<br>
-                                Grostonas iela 6b
-                            </div>
-                        </div>
-                        <div class="versus">
-                            <div class="versus-side">
-                                <img src="{% static '/images/team-3.png' %}" style="max-height:100px;">
-                                <div style="font-size: 0.7em;line-height: 1em;">FC Petrow</div>
-                            </div>
-                            <div class="versus-side">
-                                <img src="{% static '/images/team-4.png' %}" style="max-height:100px;">
-                                <div style="font-size: 0.7em;line-height: 1em;">RSU/BAO-Dobele</div>
-                            </div>
-                        </div>
-                        <a href="#" class="button button-block">Visas spēles</a>
-                    </div>
+                    {% include "core/nextmatch.html" %}
                 </div>
             </div>
         </div>
