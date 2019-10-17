@@ -1,6 +1,5 @@
 {% load static api_tags page_tags %}
 {% nextmatch as nm %}
-
 <div class="board align-center">
     <div class="board-content">
         <h2 class="title uppercase">Tuvākā spēle</h2>
@@ -11,7 +10,7 @@
             {{nm.facility.address}}
         </div>
     </div>
-    <div class="versus">
+    <div class="versus {{classname}}">
         <div class="versus-side">
             <img src="data:image/png;base64, {{nm.teams.0.picture.value}}">
             <div>{{nm.teams.0.internationalShortName}}</div>

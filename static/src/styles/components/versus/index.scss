@@ -1,7 +1,7 @@
 .versus {
     @include clearfix;
     background-color: color("background");
-    font-size: em(48);
+    font-size: em(26);
     line-height: 1em;
     font-family: $font-russoone;
     color: color("secondary");
@@ -34,13 +34,14 @@
         padding: 27px 10px;
 
         img {
+            max-height: 100px;
             max-width: 100%;
             margin-bottom: 18px;
         }
     }
 
     &.versus-sm {
-        font-size: em(28);
+        font-size: em(18);
         padding-left: 10px;
         padding-right: 10px;
 
