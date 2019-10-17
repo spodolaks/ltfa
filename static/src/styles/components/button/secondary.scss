@@ -4,4 +4,11 @@
     border-color: color('danger', 'dark');
     text-transform: none;
     font-weight: 400;
+
+    &.active {
+        background-color: color('danger', 'dark');
+        color: color('background');
+        border-color: color('danger', 'dark');
+        font-weight: 700;
+    }
 }
